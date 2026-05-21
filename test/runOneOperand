@@ -1,0 +1,8 @@
+#!/bin/bash
+
+/bin/xdg-open Test_one_operand.jpg
+rm -f Test_one_operand.usda Test_one_operand.rdla Test_one_operand.exr
+python Test_one_operand.py
+hd_usd2rdl -in Test_one_operand.usda -out Test_one_operand.rdla
+moonray_gui -in Test_one_operand.rdla -out Test_one_operand.exr -size 600 800 -exec_mode scalar
+moonray_gui -in Test_one_operand.rdla -out Test_one_operand.exr -size 600 800 -exec_mode vector
