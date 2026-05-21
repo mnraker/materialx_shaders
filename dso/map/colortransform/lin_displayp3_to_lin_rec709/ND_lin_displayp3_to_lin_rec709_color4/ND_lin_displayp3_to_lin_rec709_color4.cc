@@ -1,0 +1,9 @@
+// Copyright 2025 DreamWorks Animation LLC
+// SPDX-License-Identifier: Apache-2.0
+
+/// @file ND_lin_displayp3_to_lin_rec709_color4.cc
+#include "ND_lin_displayp3_to_lin_rec709_color4_ispc_stubs.h"
+
+#define VARIANT color4
+
+#include "../lin_displayp3_to_lin_rec709.cc"

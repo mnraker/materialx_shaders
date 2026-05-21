@@ -1,0 +1,13 @@
+# Copyright 2023-2025 DreamWorks Animation LLC
+# SPDX-License-Identifier: Apache-2.0
+
+add_subdirectory(add)
+add_subdirectory(subtract)
+add_subdirectory(multiply)
+add_subdirectory(divide)
+add_subdirectory(modulo)
+add_subdirectory(power)
+add_subdirectory(safepower)
+add_subdirectory(min)
+add_subdirectory(max)
+add_subdirectory(atan2)

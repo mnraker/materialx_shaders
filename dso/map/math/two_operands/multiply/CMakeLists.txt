@@ -1,0 +1,16 @@
+# Copyright 2023-2025 DreamWorks Animation LLC
+# SPDX-License-Identifier: Apache-2.0
+
+add_subdirectory(ND_multiply_float)
+add_subdirectory(ND_multiply_vector2)
+add_subdirectory(ND_multiply_vector3)
+add_subdirectory(ND_multiply_vector4)
+add_subdirectory(ND_multiply_color3)
+add_subdirectory(ND_multiply_color4)
+add_subdirectory(ND_multiply_matrix33)
+add_subdirectory(ND_multiply_matrix44)
+add_subdirectory(ND_multiply_vector2FA)
+add_subdirectory(ND_multiply_vector3FA)
+add_subdirectory(ND_multiply_vector4FA)
+add_subdirectory(ND_multiply_color3FA)
+add_subdirectory(ND_multiply_color4FA)

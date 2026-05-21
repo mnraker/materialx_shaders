@@ -1,0 +1,169 @@
+{
+	"attributes" : 
+	{
+		"selectAttr" : 
+		{
+			"default" : "\"Bool\"",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "select",
+			"type" : "String"
+		},
+		"inBoolAttr" : 
+		{
+			"default" : "false",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inBool",
+			"type" : "Bool"
+		},
+		"inIntAttr" : 
+		{
+			"default" : "8421631",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inInt",
+			"type" : "Int"
+		},
+		"inStringAttr" : 
+		{
+			"default" : "\"1.0 0.5 0.5\"",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inString",
+			"type" : "String"
+		},
+		"inFloatAttr" : 
+		{
+			"default" : "0.7",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inFloat",
+			"type" : "Float"
+		},
+		"inVec2fAttr" : 
+		{
+			"default" : "Vec2f(0.7,0.3)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inVec2f",
+			"type" : "Vec2f"
+		},
+		"inVec3fAttr" : 
+		{
+			"default" : "Vec3f(1.0,0.5,0.5)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inVec3f",
+			"type" : "Vec3f"
+		},
+		"inVec4fAttr" : 
+		{
+			"default" : "Vec4f(1.0,0.5,0.5,1.0)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inVec4f",
+			"type" : "Vec4f"
+		},
+		"inColorAttr" : 
+		{
+			"default" : "Rgb(1.0,0.5,0.5)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inColor",
+			"type" : "Rgb"
+		},
+		"inRgbaAttr" : 
+		{
+			"default" : "Rgba(1.0,0.5,0.5,1.0)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inRgba",
+			"type" : "Rgba"
+		},
+		"inMat3fAttr" : 
+		{
+			"default" : "Mat3f(1.0,0.0,0.0, 0.0,0.5,0.0, 0.0,0.0,0.5)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inMat3f",
+			"type" : "Mat3f"
+		},
+		"inMat4fAttr" : 
+		{
+			"default" : "Mat4f(1.0,0.0,0.0,0.0, 0.0,0.5,0.0,0.0, 0.0,0.0,0.5,0.0, 0.0,0.0,0.0,1.0)",
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inMat4f",
+			"type" : "Mat4f"
+		},
+		"inSceneObjectAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inSceneObject",
+			"type" : "SceneObject*"
+		},
+		"inBoolVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inBoolVector",
+			"type" : "BoolVector"
+		},
+		"inIntVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inIntVector",
+			"type" : "IntVector"
+		},
+		"inStringVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inStringVector",
+			"type" : "StringVector"
+		},
+		"inFloatVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inFloatVector",
+			"type" : "FloatVector"
+		},
+		"inVec2fVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inVec2fVector",
+			"type" : "Vec2fVector"
+		},
+		"inVec3fVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inVec3fVector",
+			"type" : "Vec3fVector"
+		},
+		"inVec4fVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inVec4fVector",
+			"type" : "Vec4fVector"
+		},
+		"inRgbVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inRgbVector",
+			"type" : "RgbVector"
+		},
+		"inRgbaVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inRgbaVector",
+			"type" : "RgbaVector"
+		},
+		"inMat3fVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inMat3fVector",
+			"type" : "Mat3fVector"
+		},
+		"inMat4fVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inMat4fVector",
+			"type" : "Mat4fVector"
+		},
+		"inSceneObjectVectorAttr" : 
+		{
+			"flags" : "FLAGS_BINDABLE",
+			"name" : "inSceneObjectVector",
+			"type" : "SceneObjectVector"
+	}
+	},
+	"name" : "TestInputsNormalMap",
+	"type" : "NormalMap"
+}

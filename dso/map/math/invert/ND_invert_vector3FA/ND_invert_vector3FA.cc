@@ -1,0 +1,10 @@
+// Copyright 2025 DreamWorks Animation LLC
+// SPDX-License-Identifier: Apache-2.0
+
+/// @file ND_invert_vector3FA.cc
+
+#include "ND_invert_vector3FA_ispc_stubs.h"
+
+#define VARIANT vector3FA
+
+#include "../invert.cc"

@@ -1,0 +1,10 @@
+// Copyright 2025 DreamWorks Animation LLC
+// SPDX-License-Identifier: Apache-2.0
+
+/// @file ND_difference_color4.cc
+
+#include "ND_difference_color4_ispc_stubs.h"
+
+#define VARIANT color4
+
+#include "../difference.cc"

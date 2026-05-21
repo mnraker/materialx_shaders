@@ -1,0 +1,11 @@
+// Copyright 2024 DreamWorks Animation LLC
+// SPDX-License-Identifier: Apache-2.0
+
+/// @file ND_round_color3.cc
+
+#include "ND_round_color3_ispc_stubs.h"
+
+#define VARIANT color3
+
+#include "../round.cc"
+

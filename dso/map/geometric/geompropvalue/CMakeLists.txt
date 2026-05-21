@@ -1,0 +1,12 @@
+# Copyright 2023-2025 DreamWorks Animation LLC
+# SPDX-License-Identifier: Apache-2.0
+
+add_subdirectory(ND_geompropvalue_boolean)
+add_subdirectory(ND_geompropvalue_integer)
+add_subdirectory(ND_geompropvalue_float)
+add_subdirectory(ND_geompropvalue_color3)
+add_subdirectory(ND_geompropvalue_color4)
+add_subdirectory(ND_geompropvalue_string)
+add_subdirectory(ND_geompropvalue_vector2)
+add_subdirectory(ND_geompropvalue_vector3)
+add_subdirectory(ND_geompropvalue_vector4)
