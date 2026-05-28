@@ -4,39 +4,39 @@
 /// @file TestVec4fInputMap.cc
 
 #include "attributes.cc"
-#include "TestInputsNormalMap_ispc_stubs.h"
+#include "TestInputsDisplacement_ispc_stubs.h"
 
 #include <moonray/rendering/shading/MapApi.h>
 #include <scene_rdl2/common/math/ispc/Typesv.h>
 using namespace scene_rdl2::math;
 using namespace scene_rdl2::rdl2;
 
-RDL2_DSO_CLASS_BEGIN(TestInputsNormalMap, NormalMap)
+RDL2_DSO_CLASS_BEGIN(TestInputsDisplacement, Displacement)
 public:
-    TestInputsNormalMap(SceneClass const &sceneClass, std::string const &name);
+    TestInputsDisplacement(SceneClass const &sceneClass, std::string const &name);
     void update();
 
 private:
-    static void sampleNormal(const NormalMap *self, moonray::shading::TLState *tls,
-                       const moonray::shading::State &state, Vec3f *sample);
+    static void displace(const Displacement *self, moonray::shading::TLState *tls,
+                         const moonray::shading::State &state, Vec3f *sample);
     // mIspc needs to be the first use of storage by this derived class
     // since ISPC cheats and gets it's offset by knowing it's first
-    ispc::TestInputsNormalMap mIspc;
+    ispc::TestInputsDisplacement mIspc;
 
 public:
 
-RDL2_DSO_CLASS_END(TestInputsNormalMap)
+RDL2_DSO_CLASS_END(TestInputsDisplacement)
 
-TestInputsNormalMap::TestInputsNormalMap(const SceneClass& sceneClass,
+TestInputsDisplacement::TestInputsDisplacement(const SceneClass& sceneClass,
         const std::string& name) :
     Parent(sceneClass, name)
 {
-    mSampleNormalFunc = TestInputsNormalMap::sampleNormal;
-    mSampleNormalFuncv = (SampleNormalFuncv) ispc::TestInputsNormalMap_getSampleFunc();
+    mDisplaceFunc = TestInputsDisplacement::displace;
+    mDisplaceFuncv = (DisplaceFuncv) ispc::TestInputsDisplacement_getDisplaceFunc();
 }
 
 void
-TestInputsNormalMap::update()
+TestInputsDisplacement::update()
 {
     String select = get(selectAttr);
     if ((select == "bool") || (select == "Bool")) {
@@ -44,19 +44,13 @@ TestInputsNormalMap::update()
     } else if ((select == "int") || (select == "Int")) {
         mIspc.choice= ispc::INPUT_INT;
     } else if (select == "String") {
-        {
-            String inStringValue = get(inStringAttr);
-            int firstSpace = inStringValue.find(' ');
-            int secondSpace = inStringValue.rfind(' ');
-            if ((firstSpace != std::string::npos) && (secondSpace != std::string::npos)) {
-                mIspc.normalValue.x = std::stof(inStringValue.substr(0,firstSpace));
-                mIspc.normalValue.y = std::stof(inStringValue.substr(firstSpace+1, secondSpace - firstSpace - 1));
-                mIspc.normalValue.z = std::stof(inStringValue.substr(secondSpace+1));
-            } else {
-                mIspc.normalValue.x = 0.0f;
-                mIspc.normalValue.y = 0.0f;
-                mIspc.normalValue.z = 1.0f;
-	        }
+        String inStringValue = get(inStringAttr);
+        int firstSpace = inStringValue.find(' ');
+        int secondSpace = inStringValue.rfind(' ');
+        if ((firstSpace != std::string::npos) && (secondSpace != std::string::npos)) {
+            mIspc.displacementValue.x = std::stof(inStringValue.substr(0,firstSpace));
+            mIspc.displacementValue.y = std::stof(inStringValue.substr(firstSpace+1, secondSpace - firstSpace - 1));
+            mIspc.displacementValue.z = std::stof(inStringValue.substr(secondSpace+1));
         }
         mIspc.choice= ispc::INPUT_STRING;
     } else if (select == "Float") {
@@ -82,37 +76,31 @@ TestInputsNormalMap::update()
     } else if (select == "IntVector") {
         mIspc.choice= ispc::INPUT_INTVECTOR;
     } else if (select == "StringVector") {
-        {
-            StringVector inStringVectorValue = get(inStringVectorAttr);
-            Vec3f outValue;
-            if (inStringVectorValue.size() > 0) {
-                String inStringValue = inStringVectorValue[0];
-                if (inStringValue == "red") {
-                    outValue = Vec3f(1.0f, 0.0f, 0.0f);
-                } else if (inStringValue == "green") {
-                    outValue = Vec3f(0.0f, 1.0f, 0.0f);
-                } else if (inStringValue == "blue") {
-                    outValue = Vec3f(0.0f, 0.0f, 1.0f);
-                } else if (inStringValue == "cyan") {
-                    outValue = Vec3f(0.0f, 1.0f, 1.0f);
-                } else if (inStringValue == "magenta") {
-                    outValue = Vec3f(1.0f, 0.0f, 1.0f);
-                } else if (inStringValue == "yellow") {
-                    outValue = Vec3f(1.0f, 1.0f, 0.0f);
-                } else if (inStringValue == "white") {
-                    outValue = Vec3f(1.0f, 1.0f, 1.0f);
-                } else if (inStringValue == "black") {
-                    outValue = Vec3f(0.0f, 0.0f, 0.0f);
-                } else {
-                    outValue = Vec3f(0.0f, 0.0f, 1.0f);
-                }
-            } else {
+        StringVector inStringVectorValue = get(inStringVectorAttr);
+		Vec3f outValue = Vec3f(0.0f, 0.0f, 0.0f);
+        if (inStringVectorValue.size() > 0) {
+            String inStringValue = inStringVectorValue[0];
+            if (inStringValue == "red") {
+                outValue = Vec3f(1.0f, 0.0f, 0.0f);
+            } else if (inStringValue == "green") {
+                outValue = Vec3f(0.0f, 1.0f, 0.0f);
+            } else if (inStringValue == "blue") {
                 outValue = Vec3f(0.0f, 0.0f, 1.0f);
+            } else if (inStringValue == "cyan") {
+                outValue = Vec3f(0.0f, 1.0f, 1.0f);
+            } else if (inStringValue == "magenta") {
+                outValue = Vec3f(1.0f, 0.0f, 1.0f);
+            } else if (inStringValue == "yellow") {
+                outValue = Vec3f(1.0f, 1.0f, 0.0f);
+            } else if (inStringValue == "white") {
+                outValue = Vec3f(1.0f, 1.0f, 1.0f);
+            } else if (inStringValue == "black") {
+                outValue = Vec3f(0.0f, 0.0f, 0.0f);
             }
-			mIspc.normalValue.x = outValue.x;
-            mIspc.normalValue.y = outValue.y;
-            mIspc.normalValue.z = outValue.z;
-	    }
+        }
+        mIspc.displacementValue.x = outValue.x;
+        mIspc.displacementValue.y = outValue.y;
+        mIspc.displacementValue.z = outValue.z;
         mIspc.choice= ispc::INPUT_STRINGVECTOR;
     } else if (select == "FloatVector") {
         mIspc.choice= ispc::INPUT_FLOATVECTOR;
@@ -138,10 +126,10 @@ TestInputsNormalMap::update()
 }
 
 void
-TestInputsNormalMap::sampleNormal(const NormalMap* self, moonray::shading::TLState *tls,
+TestInputsDisplacement::displace(const Displacement* self, moonray::shading::TLState *tls,
                  const moonray::shading::State& state, Vec3f* sample)
 {
-    const TestInputsNormalMap* me = static_cast<const TestInputsNormalMap*>(self);
+    const TestInputsDisplacement* me = static_cast<const TestInputsDisplacement*>(self);
 
     Bool   inBoolValue   = evalBool(  me, inBoolAttr,   tls, state);
     Int    inIntValue    = evalInt(   me, inIntAttr,    tls, state);
@@ -184,7 +172,7 @@ TestInputsNormalMap::sampleNormal(const NormalMap* self, moonray::shading::TLSta
         outValue.z = ((inIntValue>>16)&0xFF)/255.0;
         break;
       case ispc::INPUT_STRING:
-		outValue = Vec3f(me->mIspc.normalValue.x, me->mIspc.normalValue.y, me->mIspc.normalValue.z);
+        outValue = Vec3f(me->mIspc.displacementValue.x, me->mIspc.displacementValue.y, me->mIspc.displacementValue.z);
         break;
       case ispc::INPUT_FLOAT:
         outValue = Vec3f(inFloatValue);
@@ -268,7 +256,7 @@ TestInputsNormalMap::sampleNormal(const NormalMap* self, moonray::shading::TLSta
         }
         break;
       case ispc::INPUT_STRINGVECTOR:
-        outValue = Vec3f(me->mIspc.normalValue.x, me->mIspc.normalValue.y, me->mIspc.normalValue.z);
+        outValue = Vec3f(me->mIspc.displacementValue.x, me->mIspc.displacementValue.y, me->mIspc.displacementValue.z);
         break;
       case ispc::INPUT_FLOATVECTOR:
         // The Vec3f is split over three values to pass it through completely

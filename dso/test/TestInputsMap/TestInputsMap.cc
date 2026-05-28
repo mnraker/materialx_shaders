@@ -87,6 +87,20 @@ TestInputsMap::update()
     } else if (select == "RawInt") {
         mIspc.choice= ispc::INPUT_RAW_INT;
     } else if (select == "String") {
+        {
+            String inStringValue = get(inStringAttr);
+            int firstSpace = inStringValue.find(' ');
+            int secondSpace = inStringValue.rfind(' ');
+            if ((firstSpace != std::string::npos) && (secondSpace != std::string::npos)) {
+                mIspc.colorValue.r = std::stof(inStringValue.substr(0,firstSpace));
+                mIspc.colorValue.g = std::stof(inStringValue.substr(firstSpace+1, secondSpace - firstSpace - 1));
+                mIspc.colorValue.b = std::stof(inStringValue.substr(secondSpace+1));
+            } else {
+                mIspc.colorValue.r = 0.0;
+                mIspc.colorValue.g = 0.0;
+                mIspc.colorValue.b = 0.0;
+            }
+        }
         mIspc.choice= ispc::INPUT_STRING;
     } else if (select == "Float") {
         mIspc.choice= ispc::INPUT_FLOAT;
@@ -111,6 +125,33 @@ TestInputsMap::update()
     } else if (select == "IntVector") {
         mIspc.choice= ispc::INPUT_INTVECTOR;
     } else if (select == "StringVector") {
+		{
+            Color colorValue;
+			StringVector inStringVectorValue = get(inStringVectorAttr);
+            if (inStringVectorValue.size() > 0) {
+                String inStringValue = inStringVectorValue[0];
+                if (inStringValue == "red") {
+                    colorValue = Color(1.0f, 0.0f, 0.0f);
+                } else if (inStringValue == "green") {
+                    colorValue = Color(0.0f, 1.0f, 0.0f);
+                } else if (inStringValue == "blue") {
+                    colorValue = Color(0.0f, 0.0f, 1.0f);
+                } else if (inStringValue == "cyan") {
+                    colorValue = Color(0.0f, 1.0f, 1.0f);
+                } else if (inStringValue == "magenta") {
+                    colorValue = Color(1.0f, 0.0f, 1.0f);
+                } else if (inStringValue == "yellow") {
+                    colorValue = Color(1.0f, 1.0f, 0.0f);
+                } else if (inStringValue == "white") {
+                    colorValue = Color(1.0f, 1.0f, 1.0f);
+                } else if (inStringValue == "black") {
+                    colorValue = Color(0.0f, 0.0f, 0.0f);
+                }
+            }
+		    mIspc.colorValue.r = colorValue.r;
+		    mIspc.colorValue.g = colorValue.g;
+		    mIspc.colorValue.b = colorValue.b;
+		}
         mIspc.choice= ispc::INPUT_STRINGVECTOR;
     } else if (select == "FloatVector") {
         mIspc.choice= ispc::INPUT_FLOATVECTOR;
@@ -143,7 +184,6 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
 
     Bool   inBoolValue   = evalBool(  me, inBoolAttr,   tls, state);
     Int    inIntValue    = evalInt(   me, inIntAttr,    tls, state);
-    String inStringValue = me->get(inStringAttr);
     Float  inFloatValue  = evalFloat( me, inFloatAttr,  tls, state);
     Vec2f  inVec2fValue  = evalVec2f( me, inVec2fAttr,  tls, state);
     Vec3f  inVec3fValue  = evalVec3f( me, inVec3fAttr,  tls, state);
@@ -156,7 +196,6 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
 
     BoolVector   inBoolVectorValue   = evalBoolVector(  me, inBoolVectorAttr,   tls, state);
     IntVector    inIntVectorValue    = evalIntVector(   me, inIntVectorAttr,    tls, state);
-    StringVector inStringVectorValue = me->get(inStringVectorAttr);
     FloatVector  inFloatVectorValue  = evalFloatVector( me, inFloatVectorAttr,  tls, state);
     Vec2fVector  inVec2fVectorValue  = evalVec2fVector( me, inVec2fVectorAttr,  tls, state);
     Vec3fVector  inVec3fVectorValue  = evalVec3fVector( me, inVec3fVectorAttr,  tls, state);
@@ -193,15 +232,7 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
         outValue = Color(inIntValue,inIntValue,inIntValue);
         break;
       case ispc::INPUT_STRING:
-        {
-            int firstSpace = inStringValue.find(' ');
-            int secondSpace = inStringValue.rfind(' ');
-            if ((firstSpace != std::string::npos) && (secondSpace != std::string::npos)) {
-                outValue.r = std::stof(inStringValue.substr(0,firstSpace));
-                outValue.g = std::stof(inStringValue.substr(firstSpace+1, secondSpace - firstSpace - 1));
-                outValue.b = std::stof(inStringValue.substr(secondSpace+1));
-            }
-        }
+		outValue = Color(me->mIspc.colorValue.r, me->mIspc.colorValue.g, me->mIspc.colorValue.b);
         break;
       case ispc::INPUT_FLOAT:
         outValue = Color(inFloatValue);
@@ -271,7 +302,6 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
                 outValue.b = value/255.0;
            }
         }
-        fprintf(stderr,"BoolVector\n");
         break;
       case ispc::INPUT_INTVECTOR:
         // The Color is split over three values to pass it through completely
@@ -284,30 +314,9 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
         if (inFloatVectorValue.size() > 2) {
             outValue.b = inIntVectorValue[2]/65536.0f;
         }
-        fprintf(stderr,"IntVector\n");
         break;
       case ispc::INPUT_STRINGVECTOR:
-        if (inStringVectorValue.size() > 0) {
-            String inStringValue = inStringVectorValue[0];
-            if (inStringValue == "red") {
-                outValue = Color(1.0f, 0.0f, 0.0f);
-            } else if (inStringValue == "green") {
-                outValue = Color(0.0f, 1.0f, 0.0f);
-            } else if (inStringValue == "blue") {
-                outValue = Color(0.0f, 0.0f, 1.0f);
-            } else if (inStringValue == "cyan") {
-                outValue = Color(0.0f, 1.0f, 1.0f);
-            } else if (inStringValue == "magenta") {
-                outValue = Color(1.0f, 0.0f, 1.0f);
-            } else if (inStringValue == "yellow") {
-                outValue = Color(1.0f, 1.0f, 0.0f);
-            } else if (inStringValue == "white") {
-                outValue = Color(1.0f, 1.0f, 1.0f);
-            } else if (inStringValue == "black") {
-                outValue = Color(0.0f, 0.0f, 0.0f);
-            }
-        }
-        fprintf(stderr,"StringVector\n");
+		outValue = Color(me->mIspc.colorValue.r, me->mIspc.colorValue.g, me->mIspc.colorValue.b);
         break;
       case ispc::INPUT_FLOATVECTOR:
         // The Color is split over three values to pass it through completely
@@ -320,7 +329,6 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
         if (inFloatVectorValue.size() > 2) {
             outValue.b = inFloatVectorValue[2];
         }
-        fprintf(stderr,"FloatVector\n");
         break;
       case ispc::INPUT_VEC2FVECTOR:
         // The Color is split over two values to pass it through completely
@@ -333,51 +341,43 @@ TestInputsMap::sample(const Map* self, moonray::shading::TLState *tls,
             Vec2f inVec2fValue = inVec2fVectorValue[0];
             outValue.b = inVec2fVectorValue[1].x;
         }
-        fprintf(stderr,"Vec2fVector\n");
         break;
       case ispc::INPUT_VEC3FVECTOR:
         if (inVec3fVectorValue.size() > 0) {
             Vec3f inVec3fValue = inVec3fVectorValue[0];
             outValue = Color(inVec3fValue.x, inVec3fValue.y, inVec3fValue.z);
         }
-        fprintf(stderr,"Vec3fVector\n");
         break;
       case ispc::INPUT_VEC4FVECTOR:
         if (inVec4fVectorValue.size() > 0) {
             Vec4f inVec4fValue = inVec4fVectorValue[0];
             outValue = Color(inVec4fValue.x, inVec4fValue.y, inVec4fValue.z);
         }
-        fprintf(stderr,"Vec4fVector\n");
         break;
       case ispc::INPUT_RGBVECTOR:
         if (inRgbVectorValue.size() > 0) {
             outValue = inRgbVectorValue[0];
         }
-        fprintf(stderr,"RgbVector\n");
         break;
       case ispc::INPUT_RGBAVECTOR:
         if (inRgbaVectorValue.size() > 0) {
             Rgba inRgbaValue = inRgbaVectorValue[0];
             outValue = Color(inRgbaValue.r,inRgbaValue.g, inRgbaValue.b);
         }
-        fprintf(stderr,"RgbaVector\n");
         break;
       case ispc::INPUT_MAT3FVECTOR:
         if (inMat3fVectorValue.size() > 0) {
             Mat3f inMat3fValue = inMat3fVectorValue[0];
             outValue = Color(inMat3fValue.vx.x,inMat3fValue.vy.y, inMat3fValue.vz.z);
         }
-        fprintf(stderr,"Mat3fVector\n");
         break;
       case ispc::INPUT_MAT4FVECTOR:
         if (inMat4fVectorValue.size() > 0) {
             Mat4f inMat4fValue = inMat4fVectorValue[0];
             outValue = Color(inMat4fValue.vx.x,inMat4fValue.vy.y, inMat4fValue.vz.z);
         }
-        fprintf(stderr,"Mat4fVector\n");
         break;
       case ispc::INPUT_SCENEOBJECTVECTOR:
-        fprintf(stderr,"SceneObjectVector\n");
         break;
       default:
         break;

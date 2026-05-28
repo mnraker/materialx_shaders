@@ -1,11 +1,11 @@
 // Copyright 2024 DreamWorks Animation LLC
 // SPDX-License-Identifier: Apache-2.0
 
-/// @file "TestInputsMap.ispc"
+/// @file "TestInputsMaterial.ispc"
 
 #include "attributes.isph"
 
-#include <moonray/rendering/shading/ispc/MapApi.isph>
+#include <moonray/rendering/shading/ispc/MaterialApi.isph>
 
 enum InputSelection {
     INPUT_BOOL = 0,
@@ -31,36 +31,35 @@ enum InputSelection {
     INPUT_RGBAVECTOR = 20,
     INPUT_MAT3FVECTOR = 21,
     INPUT_MAT4FVECTOR = 22,
-    INPUT_SCENEOBJECTVECTOR = 23,
-    INPUT_RAW_INT = 24,
-    INPUT_RAW_BOOL = 25
+    INPUT_SCENEOBJECTVECTOR = 23
 };
 ISPC_UTIL_EXPORT_ENUM_TO_HEADER(InputSelection);
 
-struct TestInputsMap {
+struct TestInputsMaterial {
     uniform bool disableMode;
     uniform int choice;
 	uniform Color colorValue;
 };
-ISPC_UTIL_EXPORT_UNIFORM_STRUCT_TO_HEADER(TestInputsMap);
+ISPC_UTIL_EXPORT_UNIFORM_STRUCT_TO_HEADER(TestInputsMaterial);
 
-static varying Color
-sample(const uniform Map *            uniform  map,
+void
+shade(const uniform Material *            uniform  material,
              uniform ShadingTLState * uniform  tls,
-       const varying State &                   state)
+       const varying State &                   state,
+       BsdfBuilder&                   bsdfBuilder)
 {
     varying Color outValue;
-    const uniform TestInputsMap* uniform me = MAP_GET_ISPC_CPTR(TestInputsMap, map);
-    varying bool inBoolValue = evalInBoolAttr(map, tls, state);
-    varying int inIntValue = evalInIntAttr(map, tls, state);
-    varying float inFloatValue = evalInFloatAttr(map, tls, state);
-    varying Vec2f inVec2fValue = evalInVec2fAttr(map, tls, state);
-    varying Vec3f inVec3fValue = evalInVec3fAttr(map, tls, state);
-    varying Vec4f inVec4fValue = evalInVec4fAttr(map, tls, state);
-    varying Color inColorValue = evalInColorAttr(map, tls, state);
-    varying Col4f inRgbaValue = evalInRgbaAttr(map, tls, state);
-    varying Mat3f inMat3fValue = evalInMat3fAttr(map, tls, state);
-    varying Mat4f inMat4fValue = evalInMat4fAttr(map, tls, state);
+    const uniform TestInputsMaterial* uniform me = MATERIAL_GET_ISPC_CPTR(TestInputsMaterial, material);
+    varying bool inBoolValue = evalInBoolAttr(material, tls, state);
+    varying int inIntValue = evalInIntAttr(material, tls, state);
+    varying float inFloatValue = evalInFloatAttr(material, tls, state);
+    varying Vec2f inVec2fValue = evalInVec2fAttr(material, tls, state);
+    varying Vec3f inVec3fValue = evalInVec3fAttr(material, tls, state);
+    varying Vec4f inVec4fValue = evalInVec4fAttr(material, tls, state);
+    varying Color inColorValue = evalInColorAttr(material, tls, state);
+    varying Col4f inRgbaValue = evalInRgbaAttr(material, tls, state);
+    varying Mat3f inMat3fValue = evalInMat3fAttr(material, tls, state);
+    varying Mat4f inMat4fValue = evalInMat4fAttr(material, tls, state);
 
     switch (me->choice) {
       case INPUT_BOOL:
@@ -70,23 +69,13 @@ sample(const uniform Map *            uniform  map,
             outValue = Color_ctor(0.25, 0.25, 0.25);
         }
         break;
-      case INPUT_RAW_BOOL:
-        if (inBoolValue) {
-            outValue = Color_ctor(1.0,1.0,1.0);
-        } else {
-            outValue = Color_ctor(0.0,0.0,0.0);
-        }
-        break;
       case INPUT_INT:
         outValue.r = (inIntValue&0xFF)/255.0;
         outValue.g = ((inIntValue>>8)&0xFF)/255.0;
         outValue.b = ((inIntValue>>16)&0xFF)/255.0;
         break;
-      case INPUT_RAW_INT:
-        outValue = Color_ctor(inIntValue, inIntValue, inIntValue);
-        break;
       case INPUT_STRING:
-	    outValue = me->colorValue;
+        outValue = me->colorValue;
 		break;
       case INPUT_FLOAT:
         outValue = Color_ctor(inFloatValue);
@@ -127,8 +116,9 @@ sample(const uniform Map *            uniform  map,
       case INPUT_MAT4FVECTOR:
 */
     }
-    return outValue;
+    BsdfBuilder_addEmission(bsdfBuilder, outValue);
+
 }
 
-DEFINE_MAP_SHADER(TestInputsMap, sample)
+DEFINE_MATERIAL_SHADER(TestInputsMaterial, shade)
 

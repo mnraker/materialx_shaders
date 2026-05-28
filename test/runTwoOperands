@@ -1,0 +1,61 @@
+#!/bin/bash
+
+rm -f Test_ND_add.usda Test_ND_add.rdla Test_ND_add.exr
+python Test_ND_add.py
+hd_usd2rdl -in Test_ND_add.usda -out Test_ND_add.rdla
+moonray_gui -in Test_ND_add.rdla -out Test_ND_add.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_add.rdla -out Test_ND_add.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_subtract.usda Test_ND_subtract.rdla Test_ND_subtract.exr
+python Test_ND_subtract.py
+hd_usd2rdl -in Test_ND_subtract.usda -out Test_ND_subtract.rdla
+moonray_gui -in Test_ND_subtract.rdla -out Test_ND_subtract.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_subtract.rdla -out Test_ND_subtract.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_multiply.usda Test_ND_multiply.rdla Test_ND_multiply.exr
+python Test_ND_multiply.py
+hd_usd2rdl -in Test_ND_multiply.usda -out Test_ND_multiply.rdla
+moonray_gui -in Test_ND_multiply.rdla -out Test_ND_multiply.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_multiply.rdla -out Test_ND_multiply.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_divide.usda Test_ND_divide.rdla Test_ND_divide.exr
+python Test_ND_divide.py
+hd_usd2rdl -in Test_ND_divide.usda -out Test_ND_divide.rdla
+moonray_gui -in Test_ND_divide.rdla -out Test_ND_divide.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_divide.rdla -out Test_ND_divide.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_modulo.usda Test_ND_modulo.rdla Test_ND_modulo.exr
+python Test_ND_modulo.py
+hd_usd2rdl -in Test_ND_modulo.usda -out Test_ND_modulo.rdla
+moonray_gui -in Test_ND_modulo.rdla -out Test_ND_modulo.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_modulo.rdla -out Test_ND_modulo.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_power.usda Test_ND_power.rdla Test_ND_power.exr
+python Test_ND_power.py
+hd_usd2rdl -in Test_ND_power.usda -out Test_ND_power.rdla
+moonray_gui -in Test_ND_power.rdla -out Test_ND_power.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_power.rdla -out Test_ND_power.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_safepower.usda Test_ND_safepower.rdla Test_ND_safepower.exr
+python Test_ND_safepower.py
+hd_usd2rdl -in Test_ND_safepower.usda -out Test_ND_safepower.rdla
+moonray_gui -in Test_ND_safepower.rdla -out Test_ND_safepower.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_safepower.rdla -out Test_ND_safepower.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_min.usda Test_ND_min.rdla Test_ND_min.exr
+python Test_ND_min.py
+hd_usd2rdl -in Test_ND_min.usda -out Test_ND_min.rdla
+moonray_gui -in Test_ND_min.rdla -out Test_ND_min.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_min.rdla -out Test_ND_min.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_max.usda Test_ND_max.rdla Test_ND_max.exr
+python Test_ND_max.py
+hd_usd2rdl -in Test_ND_max.usda -out Test_ND_max.rdla
+moonray_gui -in Test_ND_max.rdla -out Test_ND_max.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_max.rdla -out Test_ND_max.exr -size 960 540 -exec_mode vector
+
+rm -f Test_ND_atan2.usda Test_ND_atan2.rdla Test_ND_atan2.exr
+python Test_ND_atan2.py
+hd_usd2rdl -in Test_ND_atan2.usda -out Test_ND_atan2.rdla
+moonray_gui -in Test_ND_atan2.rdla -out Test_ND_atan2.exr -size 960 540 -exec_mode scalar
+moonray_gui -in Test_ND_atan2.rdla -out Test_ND_atan2.exr -size 960 540 -exec_mode vector

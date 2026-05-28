@@ -1,7 +1,7 @@
 // Copyright 2024 DreamWorks Animation LLC
 // SPDX-License-Identifier: Apache-2.0
 
-/// @file "TestInputsMap.ispc"
+/// @file "TestInputsDisplacement.ispc"
 
 #include "attributes.isph"
 
@@ -31,26 +31,24 @@ enum InputSelection {
     INPUT_RGBAVECTOR = 20,
     INPUT_MAT3FVECTOR = 21,
     INPUT_MAT4FVECTOR = 22,
-    INPUT_SCENEOBJECTVECTOR = 23,
-    INPUT_RAW_INT = 24,
-    INPUT_RAW_BOOL = 25
+    INPUT_SCENEOBJECTVECTOR = 23
 };
 ISPC_UTIL_EXPORT_ENUM_TO_HEADER(InputSelection);
 
-struct TestInputsMap {
+struct TestInputsDisplacement {
     uniform bool disableMode;
     uniform int choice;
-	uniform Color colorValue;
+    uniform Vec3f displacementValue;
 };
-ISPC_UTIL_EXPORT_UNIFORM_STRUCT_TO_HEADER(TestInputsMap);
+ISPC_UTIL_EXPORT_UNIFORM_STRUCT_TO_HEADER(TestInputsDisplacement);
 
-static varying Color
-sample(const uniform Map *            uniform  map,
-             uniform ShadingTLState * uniform  tls,
+static varying Vec3f
+displace(const uniform Displacement *            uniform  map,
+         uniform ShadingTLState * uniform  tls,
        const varying State &                   state)
 {
-    varying Color outValue;
-    const uniform TestInputsMap* uniform me = MAP_GET_ISPC_CPTR(TestInputsMap, map);
+    varying Vec3f outValue;
+    const uniform TestInputsDisplacement* uniform me = DISPLACEMENT_GET_ISPC_CPTR(TestInputsDisplacement, map);
     varying bool inBoolValue = evalInBoolAttr(map, tls, state);
     varying int inIntValue = evalInIntAttr(map, tls, state);
     varying float inFloatValue = evalInFloatAttr(map, tls, state);
@@ -65,52 +63,42 @@ sample(const uniform Map *            uniform  map,
     switch (me->choice) {
       case INPUT_BOOL:
         if (inBoolValue) {
-            outValue = Color_ctor(0.75, 0.75, 0.75);
+            outValue = Vec3f_ctor(0.75, 0.75, 0.75);
         } else {
-            outValue = Color_ctor(0.25, 0.25, 0.25);
-        }
-        break;
-      case INPUT_RAW_BOOL:
-        if (inBoolValue) {
-            outValue = Color_ctor(1.0,1.0,1.0);
-        } else {
-            outValue = Color_ctor(0.0,0.0,0.0);
+            outValue = Vec3f_ctor(0.25, 0.25, 0.25);
         }
         break;
       case INPUT_INT:
-        outValue.r = (inIntValue&0xFF)/255.0;
-        outValue.g = ((inIntValue>>8)&0xFF)/255.0;
-        outValue.b = ((inIntValue>>16)&0xFF)/255.0;
-        break;
-      case INPUT_RAW_INT:
-        outValue = Color_ctor(inIntValue, inIntValue, inIntValue);
+        outValue.x = (inIntValue&0xFF)/255.0;
+        outValue.y = ((inIntValue>>8)&0xFF)/255.0;
+        outValue.z = ((inIntValue>>16)&0xFF)/255.0;
         break;
       case INPUT_STRING:
-	    outValue = me->colorValue;
+        outValue = me->displacementValue;
 		break;
       case INPUT_FLOAT:
-        outValue = Color_ctor(inFloatValue);
+        outValue = Vec3f_ctor(inFloatValue);
         break;
       case INPUT_VEC2F:
-        outValue = Color_ctor(inVec2fValue.x, inVec2fValue.y, 0.0f);
+        outValue = Vec3f_ctor(inVec2fValue.x, inVec2fValue.y, 0.0f);
         break;
       case INPUT_VEC3F:
-        outValue = Color_ctor(inVec3fValue.x, inVec3fValue.y, inVec3fValue.z);
+        outValue = inVec3fValue;
         break;
       case INPUT_VEC4F:
-        outValue = Color_ctor(inVec4fValue.x, inVec4fValue.y, inVec4fValue.z);
+        outValue = Vec3f_ctor(inVec4fValue.x, inVec4fValue.y, inVec4fValue.z);
         break;
       case INPUT_COLOR:
-        outValue = inColorValue;
+        outValue = Vec3f_ctor(inColorValue.r, inColorValue.g, inColorValue.b);
         break;
       case INPUT_RGBA:
-        outValue = Color_ctor(inRgbaValue.r, inRgbaValue.g, inRgbaValue.b);
+        outValue = Vec3f_ctor(inRgbaValue.r, inRgbaValue.g, inRgbaValue.b);
         break;
       case INPUT_MAT3F:
-       outValue = Color_ctor(inMat3fValue.vx.x,inMat3fValue.vy.y, inMat3fValue.vz.z);
+       outValue = Vec3f_ctor(inMat3fValue.vx.x,inMat3fValue.vy.y, inMat3fValue.vz.z);
        break;
       case INPUT_MAT4F:
-        outValue = Color_ctor(inMat4fValue.vx.x,inMat4fValue.vy.y, inMat4fValue.vz.z);
+        outValue = Vec3f_ctor(inMat4fValue.vx.x,inMat4fValue.vy.y, inMat4fValue.vz.z);
         break;
 
 /* ispc doesn't support the Vector types
@@ -130,5 +118,4 @@ sample(const uniform Map *            uniform  map,
     return outValue;
 }
 
-DEFINE_MAP_SHADER(TestInputsMap, sample)
-
+DEFINE_DISPLACEMENT_SHADER(TestInputsDisplacement, displace)

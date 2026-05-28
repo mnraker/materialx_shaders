@@ -38,6 +38,7 @@ ISPC_UTIL_EXPORT_ENUM_TO_HEADER(InputSelection);
 struct TestInputsNormalMap {
     uniform bool disableMode;
     uniform int choice;
+	uniform Vec3f normalValue;
 };
 ISPC_UTIL_EXPORT_UNIFORM_STRUCT_TO_HEADER(TestInputsNormalMap);
 
@@ -72,10 +73,9 @@ displace(const uniform NormalMap *            uniform  map,
         outValue.y = ((inIntValue>>8)&0xFF)/255.0;
         outValue.z = ((inIntValue>>16)&0xFF)/255.0;
         break;
-
-      // ispc doesn't support String
-      // case INPUT_STRING:
-      
+      case INPUT_STRING:
+        outValue = me->normalValue;    
+		break;
       case INPUT_FLOAT:
         outValue = Vec3f_ctor(inFloatValue);
         break;

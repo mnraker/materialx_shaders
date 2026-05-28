@@ -1,0 +1,27 @@
+#!/bin/bash
+
+/bin/xdg-open ReferenceImage.jpg&
+
+rm -f TestMapInputTypes.usda TestMapInputTypes.rdla TestMapInputTypes.exr
+python TestMapInputTypes.py
+hd_usd2rdl -in TestMapInputTypes.usda -out TestMapInputTypes.rdla
+moonray_gui -in TestMapInputTypes.rdla -out TestMapInputTypes.exr -size 960 540 -exec_mode scalar
+moonray_gui -in TestMapInputTypes.rdla -out TestMapInputTypes.exr -size 960 540 -exec_mode vector
+
+rm -f TestMaterialInputTypes.usda TestMaterialInputTypes.rdla TestMaterialInputTypes.exr
+python TestMaterialInputTypes.py
+hd_usd2rdl -in TestMaterialInputTypes.usda -out TestMaterialInputTypes.rdla
+moonray_gui -in TestMaterialInputTypes.rdla -out TestMaterialInputTypes.exr -size 960 540 -exec_mode scalar
+moonray_gui -in TestMaterialInputTypes.rdla -out TestMaterialInputTypes.exr -size 960 540 -exec_mode vector
+
+rm -f TestNormalMapInputTypes.usda TestNormalMapInputTypes.rdla TestNormalMapInputTypes.exr
+python TestNormalMapInputTypes.py
+hd_usd2rdl -in TestNormalMapInputTypes.usda -out TestNormalMapInputTypes.rdla
+moonray_gui -in TestNormalMapInputTypes.rdla -out TestNormalMapInputTypes.exr -size 960 540 -exec_mode scalar
+moonray_gui -in TestNormalMapInputTypes.rdla -out TestNormalMapInputTypes.exr -size 960 540 -exec_mode vector
+
+rm -f TestDisplacementInputTypes.usda TestDisplacementInputTypes.rdla TestDisplacementInputTypes.exr
+python TestDisplacementInputTypes.py
+hd_usd2rdl -in TestDisplacementInputTypes.usda -out TestDisplacementInputTypes.rdla
+moonray_gui -in TestDisplacementInputTypes.rdla -out TestDisplacementInputTypes.exr -size 960 540 -exec_mode scalar
+moonray_gui -in TestDisplacementInputTypes.rdla -out TestDisplacementInputTypes.exr -size 960 540 -exec_mode vector

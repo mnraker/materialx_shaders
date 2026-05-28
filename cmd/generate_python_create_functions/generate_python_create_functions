@@ -1,0 +1,170 @@
+#! /usr/bin/env python3
+import scene_rdl2
+
+def rdltype_to_usdtype(rdlType):
+    if rdlType == 'Bool':
+        return 'Sdf.ValueTypeNames.Bool'
+    elif rdlType == 'Int':
+        return 'Sdf.ValueTypeNames.Int'
+    elif rdlType == 'String':
+        return 'Sdf.ValueTypeNames.String'
+    elif rdlType == 'Float':
+        return 'Sdf.ValueTypeNames.Float'
+    elif rdlType == 'Vec2f':
+        return 'Sdf.ValueTypeNames.Float2'
+    elif rdlType == 'Vec3f':
+        return 'Sdf.ValueTypeNames.Float3'
+    elif rdlType == 'Vec4f':
+        return 'Sdf.ValueTypeNames.Float4'
+    elif rdlType == 'Rgb':
+        return 'Sdf.ValueTypeNames.Float3'
+    elif rdlType == 'Rgba':
+        return 'Sdf.ValueTypeNames.Float4'
+    elif rdlType == 'Mat3f':
+        return 'Sdf.ValueTypeNames.Matrix3d'
+    elif rdlType == 'Mat4f':
+        return 'Sdf.ValueTypeNames.Matrix4d'
+    elif rdlType == 'SceneObject':
+        return 'Sdf.ValueTypeNames.Token'
+    elif rdlType == 'BoolVector':
+        return 'Sdf.ValueTypeNames.BoolArray'
+    elif rdlType == 'IntVector':
+        return 'Sdf.ValueTypeNames.IntArray'
+    elif rdlType == 'StringVector':
+        return 'Sdf.ValueTypeNames.StringArray'
+    elif rdlType == 'FloatVector':
+        return 'Sdf.ValueTypeNames.FloatArray'
+    elif rdlType == 'Vec2fVector':
+        return 'Sdf.ValueTypeNames.Float2Array'
+    elif rdlType == 'Vec3fVector':
+        return 'Sdf.ValueTypeNames.Float3Array'
+    elif rdlType == 'Vec4fVector':
+        return 'Sdf.ValueTypeNames.Float4Array'
+    elif rdlType == 'RgbVector':
+        return 'Sdf.ValueTypeNames.Float3Array'
+    elif rdlType == 'RgbaVector':
+        return 'Sdf.ValueTypeNames.Float4Array'
+    elif rdlType == 'Mat3fVector':
+        return 'Sdf.ValueTypeNames.Matrix3dArray'
+    elif rdlType == 'Mat4fVector':
+        return 'Sdf.ValueTypeNames.Matrix4dArray'
+    elif rdlType == 'SceneObjectVector':
+        return 'Sdf.ValueTypeNames.TokenArray'
+
+def generateCreateFunction(cls, clsname, obj):
+    attrs = obj.getAttributeNamesAndTypes()
+
+    print('', flush=True)
+    print('#', flush=True)
+    print('# {}'.format(clsname), flush=True)
+    print('#', flush=True)
+    print('def create_{}( stage, path, name{}'.format(clsname, "):" if (len(attrs) == 0) else ","), flush=True)
+    for attr in attrs:
+        #print("    {} {}".format(attr,attrs[attr]))
+        name = attr
+        if attr== 'in':
+            attrName = 'inAttr'
+        elif name == 'type':
+            attrName = 'typeAttr'
+        else:
+            attrName = name
+        if attr == list(attrs.keys())[-1]:
+            print('    {}=None):'.format(attrName), flush=True)
+        else:
+            print('    {}=None,'.format(attrName), flush=True)
+
+    print('', flush=True)
+    print('    shader = UsdShade.Shader.Define(stage, HandlePath(path,name))', flush=True)
+    print('    shader.CreateIdAttr(\'{}\')'.format(clsname), flush=True)
+    print('', flush=True)
+
+    for attr in attrs:
+        name = attr
+        if attr== 'in':
+            attrName = 'inAttr'
+        elif name == 'type':
+            attrName = 'typeAttr'
+        else:
+            attrName = name
+
+        rdlType = attrs[attr]
+        typeName = rdltype_to_usdtype(rdlType)
+        attrObj = cls.getAttribute(attr)
+
+        bindable = attrObj.isBindable()
+        enumerable = attrObj.isEnumerable()
+
+        if bindable:
+            bindableString = ', bindable=True'
+        else:
+            bindableString = ''
+
+        first = True
+        if enumerable:
+            enumValMap = attrObj.getEnumValMap()
+            print('    # Convert labels to numbers for enumeration of "{}"'.format(attrName), flush=True)
+            for value in enumValMap:
+                label = enumValMap[value]
+                if first:
+                    print('    if {} == \'{}\':'.format(attrName, label), flush=True)
+                    first = False
+                else:
+                    print('    elif {} == \'{}\':'.format(attrName, label), flush=True)
+                print('        {} = {}'.format(attrName, value), flush=True)
+
+        print('    HandleShaderAttribute(shader, "{}", {}, {}{})'.format(attr, attrName, typeName,bindableString),flush=True)
+        
+    displacementObj = obj.toDisplacement()
+    if displacementObj is not None:
+        print('    # This is a displacement shader, so we need to set the output type to "displacement"', flush=True)
+        rdlType = 'displacement'
+        typeName = 'Sdf.ValueTypeNames.Float3'
+        name = "out"
+    else:
+        materialObj = obj.toMaterial()
+        if materialObj is not None:
+            rdlType = 'material'
+            typeName = 'Sdf.ValueTypeNames.Token'
+            name = "out"
+        else:
+            normapMapObj = obj.toNormalMap()
+            if normapMapObj is not None:
+                rdlType = 'normalmap'
+                typeName = 'Sdf.ValueTypeNames.Float3'
+                name = "out"
+            else:
+                rdlType = obj.getOutputTypeName()
+                typeName = rdltype_to_usdtype(rdlType)
+                name = "out"
+
+    print('', flush=True)
+    print('    # Output type is {} ({})'.format(typeName,rdlType), flush=True)
+    print('    shader.CreateOutput(\'{}\', {})'.format(name, typeName), flush=True)
+    print('    return shader', flush=True)
+
+def main():
+    context = scene_rdl2.SceneContext()
+    # context.setProxyModeEnabled(True)
+    context.loadAllSceneClasses()
+    for clsname in context.getSceneClassNames():
+        cls = context.getSceneClass(clsname)
+        obj = context.createSceneObject(clsname, clsname+"_obj")
+        mapObj = obj.toMap()
+        if mapObj is not None:
+            generateCreateFunction(cls, clsname, mapObj)
+            continue
+        normalMapObj = obj.toNormalMap()
+        if normalMapObj is not None:
+            generateCreateFunction(cls, clsname, obj)
+            continue
+        materialObj = obj.toMaterial()
+        if materialObj is not None:
+            generateCreateFunction(cls, clsname, materialObj)
+            continue
+        displacementMapObj = obj.toDisplacement()
+        if displacementMapObj is not None:
+            generateCreateFunction(cls, clsname, displacementMapObj)
+            continue
+        print("#class {} is not a map, material, or displacement shader".format(clsname), flush=True)
+
+main()
