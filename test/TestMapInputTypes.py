@@ -158,25 +158,21 @@ UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
 #
 # test String default -> Map
 index+=1
-"""
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture = shaders.create_TestInputsMap(stage, material,'MyTestInputsMap', select="String")
 pbrShader = shaders.create_UsdPreviewSurface(stage, material,'MyMaterialShader', roughness=0.4, metallic=0.0, diffuseColor=texture)
 material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
-"""
 
 # test String value -> Map
 index+=1
-"""
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture = shaders.create_TestInputsMap(stage, material,'MyTestInputsMap', select="String", inString="1.0 0.0 1.0")
 pbrShader = shaders.create_UsdPreviewSurface(stage, material,'MyMaterialShader', roughness=0.4, metallic=0.0, diffuseColor=texture)
 material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
-"""
 
 # test Color default -> Map -> String -> Map
 index+=1
