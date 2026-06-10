@@ -10,60 +10,73 @@ UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
 stage.SetDefaultPrim(stage.GetPrimAtPath("/hello"))
 
 geometry = []
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube1',  0.1, -1.2,  0.7, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube2',  0.1, -0.9,  0.7, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube3',  0.1, -0.6,  0.7, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube4',  0.1, -0.3,  0.7, 0))
+y=0.7
+x=-1.2
+xStep=0.3
+yStep=-0.28
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube1',  0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube2',  0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube3',  0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube4',  0.1, x+3*xStep, y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube5',  0.1, -1.2,  0.4, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube6',  0.1, -0.9,  0.4, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube7',  0.1, -0.6,  0.4, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube8',  0.1, -0.3,  0.4, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube5',  0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube6',  0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube7',  0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube8',  0.1, x+3*xStep, y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube9',  0.1, -1.2,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube10', 0.1, -0.9,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube11', 0.1, -0.6,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube12', 0.1, -0.3,  0.1, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube9',  0.1, x+0*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube10', 0.1, x+1*xStep,  y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube13', 0.1, -1.2, -0.2, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube14', 0.1, -0.9, -0.2, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube15', 0.1, -0.6, -0.2, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube16', 0.1, -0.3, -0.2, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube13', 0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube14', 0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube15', 0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube16', 0.1, x+3*xStep, y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube17', 0.1, -1.2, -0.5, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube18', 0.1, -0.9, -0.5, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube19', 0.1, -0.6, -0.5, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube20', 0.1, -0.3, -0.5, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube17', 0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube18', 0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube19', 0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube20', 0.1, x+3*xStep, y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube21', 0.1, -1.2, -0.8, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube22', 0.1, -0.9, -0.8, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube23', 0.1, -0.6, -0.8, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube24', 0.1, -0.3, -0.8, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube21', 0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube22', 0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube23', 0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube24', 0.1, x+3*xStep, y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube25', 0.1,  0.1,  0.7, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube26', 0.1,  0.4,  0.7, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube27', 0.1,  0.7,  0.7, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube28', 0.1,  1.0,  0.7, 0))
+y=0.7
+x=0.1
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube25', 0.1, x+0*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube26', 0.1, x+1*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube27', 0.1, x+2*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube28', 0.1, x+3*xStep,  y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube29', 0.1,  0.1,  0.4, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube30', 0.1,  0.4,  0.4, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube31', 0.1,  0.7,  0.4, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube32', 0.1,  1.0,  0.4, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube29', 0.1, x+0*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube30', 0.1, x+1*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube31', 0.1, x+2*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube32', 0.1, x+3*xStep,  y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube33', 0.1,  0.1,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube34', 0.1,  0.4,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube35', 0.1,  0.7,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube36', 0.1,  1.0,  0.1, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube33', 0.1, x+0*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube34', 0.1, x+1*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube35', 0.1, x+2*xStep,  y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube36', 0.1, x+3*xStep,  y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube37', 0.1,  0.1, -0.2, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube38', 0.1,  0.4, -0.2, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube39', 0.1,  0.7, -0.2, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube40', 0.1,  1.0, -0.2, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube37', 0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube38', 0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube39', 0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube40', 0.1, x+3*xStep, y, 0))
 
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube41', 0.1,  0.1, -0.5, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube42', 0.1,  0.4, -0.5, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube43', 0.1,  0.7, -0.5, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube44', 0.1,  1.0, -0.5, 0))
+y+=yStep
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube41', 0.1, x+0*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube42', 0.1, x+1*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube43', 0.1, x+2*xStep, y, 0))
+geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube44', 0.1, x+3*xStep, y, 0))
 
 index=-1
 
@@ -174,30 +187,9 @@ pbrShader = shaders.create_UsdPreviewSurface(stage, material,'MyMaterialShader',
 material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
 
+# Map evaluation isn't supported for Strings
 # test Color default -> Map -> String -> Map
-index+=1
-"""
-#testName= '/MyMaterialTest'+str(index)
-#material = UsdShade.Material.Define(stage,testName)
-#texture = shaders.create_TestStringOutputMap(stage, material,'MyTestStringOutputMap')
-#texture = shaders.create_TestInputsMap(stage, material,'MyTestInputsMap', inString=texture, select="String")
-#pbrShader = shaders.create_UsdPreviewSurface(stage, material,'MyMaterialShader', roughness=0.4, metallic=0.0, diffuseColor=texture)
-#material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
-#UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
-"""
-
 # test Checkerboard -> Color -> Map -> String -> Map
-index+=1
-"""
-#testName= '/MyMaterialTest'+str(index)
-#material = UsdShade.Material.Define(stage,testName)
-#texture = shaders.create_CheckerboardMap(stage,material,'checkerboard', num_u_tiles=16, num_v_tiles=16, color_A=(1,0,0), color_B=(0,1,0))
-#texture = shaders.create_TestStringOutputMap(stage, material,'MyTestStringOutputMap', inAttr=texture)
-#texture = shaders.create_TestInputsMap(stage, material,'MyTestInputsMap', inString=texture, select="String")
-#pbrShader = shaders.create_UsdPreviewSurface(stage, material,'MyMaterialShader', roughness=0.4, metallic=0.0, diffuseColor=texture)
-#material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
-#UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
-"""
 
 #
 # Float tests

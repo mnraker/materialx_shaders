@@ -22,8 +22,6 @@ geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube8',  0.1, -0.3,  
 
 geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube9',  0.1, -1.2,  0.1, 0))
 geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube10', 0.1, -0.9,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube11', 0.1, -0.6,  0.1, 0))
-geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube12', 0.1, -0.3,  0.1, 0))
 
 geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube13', 0.1, -1.2, -0.2, 0))
 geometry.append(shaders.create_MeshCube(stage, xformPrim, 'cube14', 0.1, -0.9, -0.2, 0))
@@ -162,24 +160,9 @@ pbrShader = shaders.create_TestInputsMaterial(stage, material, 'MyMaterialShader
 material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
 
+# Maps are not support for Strings
 # test Color default -> Map -> String -> Map
-index+=1
-#testName= '/MyMaterialTest'+str(index)
-#material = UsdShade.Material.Define(stage,testName)
-#texture = shaders.create_TestStringOutputMap(stage, material, 'MyTestStringOutputMap')
-#pbrShader = shaders.create_TestInputsMaterial(stage, material, 'MyMaterialShader', select="String", inString=texture)
-#material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
-#UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
-
 # test Checkerboard -> Color -> Map -> String -> Map
-index+=1
-#testName= '/MyMaterialTest'+str(index)
-#material = UsdShade.Material.Define(stage,testName)
-#texture = shaders.create_CheckerboardMap(stage,material, 'checkerboard', num_u_tiles=16, num_v_tiles=16, color_A=(1,0,0), color_B=(0,1,0))
-#texture = shaders.create_TestStringOutputMap(stage, material, 'MyTestStringOutputMap', inAttr=texture)
-#pbrShader = shaders.create_TestInputsMaterial(stage, material, 'MyMaterialShader', select="String", inString=texture)
-#material.CreateSurfaceOutput().ConnectToSource(pbrShader.ConnectableAPI(), "surface")
-#UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
 
 #
 # Float tests
