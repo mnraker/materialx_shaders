@@ -4,4 +4,3 @@
 include(MoonrayDso)
 
 add_subdirectory(map)
-add_subdirectory(test)
