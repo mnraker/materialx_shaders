@@ -1,13 +1,7 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
-import shaders
+import materialx_shaders.shaders as shaders
 
-stage = Usd.Stage.CreateNew('Test_one_operand.usda')
-xformPrim = UsdGeom.Xform.Define(stage, '/hello')
-
-# set some values to make usdchecker happy
-UsdGeom.SetStageMetersPerUnit(stage, 0.01)
-UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
-stage.SetDefaultPrim(stage.GetPrimAtPath("/hello"))
+(stage,xformPrim) = shaders.createTestStage()
 
 geometry = []
 

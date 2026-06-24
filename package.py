@@ -111,7 +111,9 @@ private_build_requires = [
     'cppunit',
     'ispc-1.20.0.x',
     'materialx', # for cmd/make_stub_shader
-    'python'
+    'python',
+    'orats',
+    'hdMoonray'
 ]
 
 commandstr = lambda i: "cd build/"+os.path.join(*variants[i])+"; ctest -j $(nproc)"
@@ -131,6 +133,7 @@ def commands():
     prependenv('LD_LIBRARY_PATH', '{root}/lib64')
     prependenv('PATH', '{root}/bin')
     prependenv('MOONRAY_CLASS_PATH', '{root}/coredata')
+    prependenv('PYTHONPATH', '{root}/python/lib/$PYTHON_NAME')
 
 
 uuid = '6f68ec78-0086-4d2a-93ec-635b490ff899'

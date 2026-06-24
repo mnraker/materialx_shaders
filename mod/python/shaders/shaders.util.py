@@ -1,7 +1,24 @@
 import pxr
+import argparse
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
-#import pxr.UsdUtils.fixBrokenPixarSchemas
-#import materialx_shaders
+
+def testParseArgs():
+    parse = argparse.ArgumentParser(description='Test generation')
+    parse.add_argument('--output', '-o', type=str, dest='outputFile', default='test.usda', help='Output file name')
+    args = parse.parse_args()
+    return args
+
+def createTestStage():
+    testArgs = testParseArgs()
+    stage = Usd.Stage.CreateNew(testArgs.outputFile)
+
+    xformPrim = UsdGeom.Xform.Define(stage, '/hello')
+
+    # set some values to make usdchecker happy
+    UsdGeom.SetStageMetersPerUnit(stage, 0.01)
+    UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
+    stage.SetDefaultPrim(stage.GetPrimAtPath("/hello"))
+    return (stage, xformPrim)
 
 def HandleShaderAttribute(shader, attrName, attrValue, attrType, bindable=False):
     if isinstance(attrValue, pxr.UsdShade.Shader):

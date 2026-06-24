@@ -4,3 +4,5 @@
 include(MoonrayDso)
 
 add_subdirectory(map)
+
+add_custom_target(all_shader_dsos)

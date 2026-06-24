@@ -3,6 +3,10 @@
 
 cmake_minimum_required (VERSION 3.23.1)
 
+find_program(GENERATE_PYTHON_CREATE_FUNCTIONS generate_python_create_functions
+		     HINTS "mod/python/generate_python_create_functions"
+		     REQUIRED)
+
 include(OMR_PackageVersion)  # Sets versionString, projectString and PACKAGE_NAME
 project(${projectString}
     VERSION ${versionString}
@@ -11,6 +15,8 @@ project(${projectString}
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 list(APPEND CMAKE_MESSAGE_CONTEXT ${PROJECT_NAME})
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include(PatsTest)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)
@@ -113,6 +119,8 @@ include(SConscriptStub)
 # ================================================
 add_subdirectory(lib)
 add_subdirectory(dso)
+add_subdirectory(mod)
+add_subdirectory(test)
 if(GLD STREQUAL "$ENV{STUDIO}")
     set(SDKScript_template "##-*-python-*-\n\nImport('env')\n\nenv.GatherProxies()\n")
     file(WRITE ${CMAKE_BINARY_DIR}/SDKScript ${SDKScript_template})

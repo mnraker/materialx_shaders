@@ -1,6 +1,9 @@
 #! /usr/bin/env python3
 import scene_rdl2
 
+
+outfile = None
+
 def rdltype_to_usdtype(rdlType):
     if rdlType == 'Bool':
         return 'Sdf.ValueTypeNames.Bool'
@@ -54,13 +57,13 @@ def rdltype_to_usdtype(rdlType):
 def generateCreateFunction(cls, clsname, obj):
     attrs = obj.getAttributeNamesAndTypes()
 
-    print('', flush=True)
-    print('#', flush=True)
-    print('# {}'.format(clsname), flush=True)
-    print('#', flush=True)
-    print('def create_{}( stage, path, name{}'.format(clsname, "):" if (len(attrs) == 0) else ","), flush=True)
+    print('', flush=True, file=outfile)
+    print('#', flush=True, file=outfile)
+    print('# {}'.format(clsname), flush=True, file=outfile)
+    print('#', flush=True, file=outfile)
+    print('def create_{}( stage, path, name{}'.format(clsname, "):" if (len(attrs) == 0) else ","), flush=True, file=outfile)
     for attr in attrs:
-        #print("    {} {}".format(attr,attrs[attr]))
+        #print("    {} {}".format(attr,attrs[attr]), flush=True,file=outfile)
         name = attr
         if attr== 'in':
             attrName = 'inAttr'
@@ -69,14 +72,14 @@ def generateCreateFunction(cls, clsname, obj):
         else:
             attrName = name
         if attr == list(attrs.keys())[-1]:
-            print('    {}=None):'.format(attrName), flush=True)
+            print('    {}=None):'.format(attrName), flush=True, file=outfile)
         else:
-            print('    {}=None,'.format(attrName), flush=True)
+            print('    {}=None,'.format(attrName), flush=True, file=outfile)
 
-    print('', flush=True)
-    print('    shader = UsdShade.Shader.Define(stage, HandlePath(path,name))', flush=True)
-    print('    shader.CreateIdAttr(\'{}\')'.format(clsname), flush=True)
-    print('', flush=True)
+    print('', flush=True, file=outfile)
+    print('    shader = UsdShade.Shader.Define(stage, HandlePath(path,name))', flush=True, file=outfile)
+    print('    shader.CreateIdAttr(\'{}\')'.format(clsname), flush=True, file=outfile)
+    print('', flush=True, file=outfile)
 
     for attr in attrs:
         name = attr
@@ -102,21 +105,21 @@ def generateCreateFunction(cls, clsname, obj):
         first = True
         if enumerable:
             enumValMap = attrObj.getEnumValMap()
-            print('    # Convert labels to numbers for enumeration of "{}"'.format(attrName), flush=True)
+            print('    # Convert labels to numbers for enumeration of "{}"'.format(attrName), flush=True, file=outfile)
             for value in enumValMap:
                 label = enumValMap[value]
                 if first:
-                    print('    if {} == \'{}\':'.format(attrName, label), flush=True)
+                    print('    if {} == \'{}\':'.format(attrName, label), flush=True, file=outfile)
                     first = False
                 else:
-                    print('    elif {} == \'{}\':'.format(attrName, label), flush=True)
-                print('        {} = {}'.format(attrName, value), flush=True)
+                    print('    elif {} == \'{}\':'.format(attrName, label), flush=True, file=outfile)
+                print('        {} = {}'.format(attrName, value), flush=True, file=outfile)
 
-        print('    HandleShaderAttribute(shader, "{}", {}, {}{})'.format(attr, attrName, typeName,bindableString),flush=True)
+        print('    HandleShaderAttribute(shader, "{}", {}, {}{})'.format(attr, attrName, typeName,bindableString),flush=True, file=outfile)
         
     displacementObj = obj.toDisplacement()
     if displacementObj is not None:
-        print('    # This is a displacement shader, so we need to set the output type to "displacement"', flush=True)
+        print('    # This is a displacement shader, so we need to set the output type to "displacement"', flush=True, file=outfile)
         rdlType = 'displacement'
         typeName = 'Sdf.ValueTypeNames.Float3'
         name = "out"
@@ -137,12 +140,28 @@ def generateCreateFunction(cls, clsname, obj):
                 typeName = rdltype_to_usdtype(rdlType)
                 name = "out"
 
-    print('', flush=True)
-    print('    # Output type is {} ({})'.format(typeName,rdlType), flush=True)
-    print('    shader.CreateOutput(\'{}\', {})'.format(name, typeName), flush=True)
-    print('    return shader', flush=True)
+    print('', flush=True, file=outfile)
+    print('    # Output type is {} ({})'.format(typeName,rdlType), flush=True, file=outfile)
+    print('    shader.CreateOutput(\'{}\', {})'.format(name, typeName), flush=True, file=outfile)
+    print('    return shader', flush=True, file=outfile)
+
+def parseArgs():
+    import argparse
+    parser = argparse.ArgumentParser(description='Generate Python create functions for all scene classes')
+    parser.add_argument('--output', '-o', type=str, dest='outputFilename', default='shaders.py', help='The file to write the create functions to')
+    parser.add_argument('--prepend', '-p', type=str, dest='prependFilename', default='shaders.util.py', help='The file to prepend to the output file (should contain imports and utility functions)')
+    return parser.parse_args()
 
 def main():
+    args = parseArgs()
+    global outfile
+    outfile = open(args.outputFilename, 'w')
+
+    # copy the contents of the prepend file to the output file
+    with open(args.prependFilename, 'r') as prependFile:
+        for line in prependFile:
+            print(line, end='', flush=True, file=outfile)
+
     context = scene_rdl2.SceneContext()
     # context.setProxyModeEnabled(True)
     context.loadAllSceneClasses()
@@ -165,6 +184,7 @@ def main():
         if displacementMapObj is not None:
             generateCreateFunction(cls, clsname, displacementMapObj)
             continue
-        print("#class {} is not a map, material, or displacement shader".format(clsname), flush=True)
+        print("#class {} is not a map, material, or displacement shader".format(clsname), flush=True, file=outfile)
+    outfile.close()
 
 main()
