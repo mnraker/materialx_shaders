@@ -6,4 +6,5 @@
 add_pats_test(
     SCRIPT Test_one_operand.py
     CANONICALS scene.exr
+    RENDER_ARGS -size 600 800
 )
