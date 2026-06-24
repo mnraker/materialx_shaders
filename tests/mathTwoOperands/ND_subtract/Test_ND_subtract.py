@@ -1,5 +1,5 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
-import shaders
+import materialx_shaders.shaders as shaders
 
 stage = Usd.Stage.CreateNew('Test_ND_subtract.usda')
 xformPrim = UsdGeom.Xform.Define(stage, '/hello')
