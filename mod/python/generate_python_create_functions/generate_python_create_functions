@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import scene_rdl2
+import os
 
 
 outfile = None
@@ -155,6 +156,8 @@ def parseArgs():
 def main():
     args = parseArgs()
     global outfile
+    dso_path = os.getenv('RDL2_DSO_PATH')
+    print("RDL2_DSO_PATH: {}".format(dso_path), flush=True)
     outfile = open(args.outputFilename, 'w')
 
     # copy the contents of the prepend file to the output file
@@ -166,6 +169,7 @@ def main():
     # context.setProxyModeEnabled(True)
     context.loadAllSceneClasses()
     for clsname in context.getSceneClassNames():
+        print("# Generating create function for class {}".format(clsname), flush=True)
         cls = context.getSceneClass(clsname)
         obj = context.createSceneObject(clsname, clsname+"_obj")
         mapObj = obj.toMap()

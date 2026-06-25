@@ -8,3 +8,6 @@ DEPENDENCIES
     Moonray::rendering_shading
     Moonray::shading_ispc
     SceneRdl2::render_util)
+
+add_dependencies(ND_contrast_color3 all_shader_dsos)
+
