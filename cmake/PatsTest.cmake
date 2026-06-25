@@ -141,14 +141,14 @@ function(add_pats_test)
              WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
     set(convert_usd_test_name "convert-usd-${test_basename}")
     add_test(NAME ${convert_usd_test_name}
-             COMMAND hd_usd2rdl -in scene.usda -out ${RDLA_FILENAME}
+			COMMAND hd_usd2rdl -in ${USDA_FILENAME} -out ${RDLA_FILENAME}
              WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
     # make the conversion test depend on the generation test
     set_tests_properties(${convert_usd_test_name} PROPERTIES DEPENDS ${generate_usd_test_name})
 
     file(RELATIVE_PATH test_rel_path ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-    set(ARG_INPUTS ${test_rel_path}/scene.rdla)
+	set(ARG_INPUTS ${test_rel_path}/${RDLA_FILENAME})
     set(ARG_DEPENDS_RAW ${convert_usd_test_name})
 
     # ctest named arguments don't handle passing of empty values well,

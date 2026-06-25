@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 add_pats_test(
-    SCRIPT Test_ND_multipy.py
+    SCRIPT Test_ND_multiply.py
     CANONICALS scene.exr
     RENDER_ARGS -size 600 800
 )
