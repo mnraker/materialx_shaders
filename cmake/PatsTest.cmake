@@ -148,13 +148,15 @@ function(add_pats_test)
     set(generate_usd_test_name "generate-usd-${test_basename}")
     add_test(NAME ${generate_usd_test_name}
              COMMAND ${Python_EXECUTABLE} ${SCRIPT_PATH} -o ${USDA_FILENAME}
-             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-             LABELS "rats;update;render")
+             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+    set_tests_properties(${generate_usd_test_name} PROPERTIES
+             LABELS "rats;render;update")
     set(convert_usd_test_name "convert-usd-${test_basename}")
     add_test(NAME ${convert_usd_test_name}
              COMMAND hd_usd2rdl -in ${USDA_FILENAME} -out ${RDLA_FILENAME}
-             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-             LABELS "rats;update;render")
+             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+    set_tests_properties(${convert_usd_test_name} PROPERTIES
+             LABELS "rats;render;update")
 
     # make the conversion test depend on the generation test
     set_tests_properties(${convert_usd_test_name} PROPERTIES DEPENDS ${generate_usd_test_name})

@@ -2,13 +2,13 @@ import pxr
 import argparse
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 
-global size = 0.13
-global startx = -1.2
-global x = startx
-global y = 1.7
-global w = (size*2)*1.2
-global h = (size*2)*1.2
-global geomIndex = 0
+gsize = 0.13
+gstartx = -1.2
+gx = gstartx
+gy = 1.7
+gw = (gsize*2)*1.2
+gh = (gsize*2)*1.2
+geomIndex = 0
 
 def testParseArgs():
     parse = argparse.ArgumentParser(description='Test generation')
@@ -16,14 +16,21 @@ def testParseArgs():
     args = parse.parse_args()
     return args
 
-def createTestStage(asize=0.13, ax=-1.2, ay=1.7):
-    global size = asize
-    global startx = ax
-    global x = startx
-    global y = ay
-    global w = (size*2)*1.2
-    global h = (size*2)*1.2
-    global geomIndex = 0
+def createTestStage(size=0.13, x=-1.2, y=1.7):
+    global gsize
+    global gstartx
+    global gx
+    global gy
+    global gw
+    global gh
+    global geomIndex
+    gsize = size
+    gstartx = x
+    gx = x
+    gy = y
+    gw = (gsize*2)*1.2
+    gh = (gsize*2)*1.2
+    geomIndex = 0
     testArgs = testParseArgs()
     stage = Usd.Stage.CreateNew(testArgs.outputFile)
 
@@ -36,16 +43,16 @@ def createTestStage(asize=0.13, ax=-1.2, ay=1.7):
     return (stage, xformPrim)
 
 def nextColumn():
-    global x
+    global gx
     global geomIndex
-    x += w
+    gx += gw
     geomIndex += 1
 
 def nextRow():
-    global x
-    global y
-    x = startx
-    y -= h
+    global gx
+    global gy
+    gx = gstartx
+    gy -= gh
 
 def HandleShaderAttribute(shader, attrName, attrValue, attrType, bindable=False):
     if isinstance(attrValue, pxr.UsdShade.Shader):
@@ -67,7 +74,7 @@ def HandlePath(path, name):
     # if the path is an object then convert it into a string
     if isinstance(path, pxr.Usd.SchemaBase):
         path=path.GetPath().pathString
-    path = path + '/' + name
+    path = path + '/' +  name
 
     return path
 
@@ -129,9 +136,11 @@ def create_MeshCube(stage, path, name, size, x, y, z):
     return meshPrim
 
 def create_MeshCubeNext(stage, xformPrim):
-    meshPrim = create_MeshCube(stage, xformPrim.GetPath(), 'geom'+str(geomIndex), size, x, y, 0)
+    meshPrim = create_MeshCube(stage, xformPrim, 'geom'+str(geomIndex), gsize, gx, gy, 0)
 
     nextColumn()
+
+    return meshPrim
 
 def create_MeshPlane(stage, path, name, size, x, y, z):
     path=HandlePath(path,name)
@@ -151,9 +160,11 @@ def create_MeshPlane(stage, path, name, size, x, y, z):
     return meshPrim
 
 def create_MeshPlaneNext(stage, xformPrim):
-    meshPrim = create_MeshPlane(stage, xformPrim.GetPath(), 'geom'+str(geomIndex), size, x, y, 0)
+    meshPrim = create_MeshPlane(stage, xformPrim, 'geom'+str(geomIndex), gsize, gx, gy, 0)
 
     nextColumn()
+
+    return meshPrim
 
 def create_Sphere(stage,path,name):
     path = HandlePath(path,name)
@@ -164,7 +175,9 @@ def create_Sphere(stage,path,name):
     return spherePrim
 
 def create_SphereNext(stage, xformPrim):
-    spherePrim = create_Sphere(stage, xformPrim.GetPath(), 'geom'+str(geomIndex))
-    spherePrim.CreateRadiusAttr(size)
+    spherePrim = create_Sphere(stage, xformPrim, 'geom'+str(geomIndex))
+    spherePrim.CreateRadiusAttr(gsize)
 
     nextColumn()
+
+    return spherePrim

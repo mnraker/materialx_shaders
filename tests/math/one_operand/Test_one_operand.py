@@ -1,98 +1,96 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 import materialx_shaders.shaders as shaders
 
-(stage,xformPrim) = shaders.createTestStage()
-
-geometry = []
 
 size=0.13
 x=-1.2
 y=1.7
-w=(size*2)*1.2
-h=(size*2)*1.2
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube1',  size, x,     y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube2',  size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube3',  size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube4',  size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube5',  size, x+4*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube6',  size, x+5*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube7',  size, x+6*w, y, 0))
+(stage,xformPrim) = shaders.createTestStage(size=size, x=x, y=y)
+geometry = []
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube8',  size, x,     y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube9',  size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube10', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube11', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube12', size, x+4*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube13', size, x+5*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube14', size, x+6*w, y, 0))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube15', size, x,     y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube16', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube17', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube18', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube19', size, x+4*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube20', size, x+5*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube21', size, x+6*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube22', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube23', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube24', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube25', size, x+4*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube26', size, x+5*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube27', size, x+6*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube28', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube29', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube30', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube31', size, x+4*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube32', size, x+5*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube33', size, x+6*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube34', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube35', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube36', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube37', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube38', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube39', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube40', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube41', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube42', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube43', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube44', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube45', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube46', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube47', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube48', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube49', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube50', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube51', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube52', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube53', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube54', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube55', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube56', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube57', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
-y-=h
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube58', size, x+w,   y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube59', size, x+2*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube60', size, x+3*w, y, 0))
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube61', size, x+4*w, y, 0))
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+
+shaders.nextRow()
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
+geometry.append(shaders.create_MeshPlaneNext(stage, xformPrim))
 
 index=-1
 
