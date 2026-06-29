@@ -5,8 +5,19 @@ include(RatsTestModified)
 
 find_package(Python REQUIRED COMPONENTS Interpreter)
 
-# Add a new PaTS test.
-# ---------------------
+# Add a new PaTS test. [Python-based (render) Acceptance Test]
+# -------------------------------------------------------------
+#
+# Pats is done as a wrapper to add_rats_test(). It takes all of the same
+# names arguments as add_rats_test() but adds SCRIPT, which is the path to a
+# python script that generates a .usda file for the test. Most arguments are
+# passed through unchanged to add_rats_test() with the exception of
+#    SCRIPT - which is consumed by add_patse_test() and not passed to add_rats_test()
+#    INPUTS - which is automatically set to the .rdla file generated from the .usda file
+#
+# add_pats_test() also passes DEPENDS_RAW to add_rats_test() which is set to the ctest
+# test that converts the .usda file to .rdla. DEPENDS_RAW is used rather than DEPENDS just
+# takes a basename and assumes the test is actually the usual bundle of rats test
 #
 # Each call to this function will
 #    1) create a ctest test which generates a .usda file from a python script 
@@ -128,7 +139,6 @@ function(add_pats_test)
     endif()
     set(SCRIPT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/${ARG_SCRIPT}")
 
-    # Name the usda file to be the name of the test with a .usda extension.
     # Name the rdla file to be the name of the test with an .rdla extension.
 	cmake_path(GET SCRIPT_PATH STEM SCRIPT_STEM)
 	set(USDA_FILENAME "${SCRIPT_STEM}.usda")
@@ -138,11 +148,13 @@ function(add_pats_test)
     set(generate_usd_test_name "generate-usd-${test_basename}")
     add_test(NAME ${generate_usd_test_name}
              COMMAND ${Python_EXECUTABLE} ${SCRIPT_PATH} -o ${USDA_FILENAME}
-             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+             LABELS "rats;update;render")
     set(convert_usd_test_name "convert-usd-${test_basename}")
     add_test(NAME ${convert_usd_test_name}
-			COMMAND hd_usd2rdl -in ${USDA_FILENAME} -out ${RDLA_FILENAME}
-             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+             COMMAND hd_usd2rdl -in ${USDA_FILENAME} -out ${RDLA_FILENAME}
+             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+             LABELS "rats;update;render")
 
     # make the conversion test depend on the generation test
     set_tests_properties(${convert_usd_test_name} PROPERTIES DEPENDS ${generate_usd_test_name})

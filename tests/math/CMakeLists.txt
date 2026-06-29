@@ -3,3 +3,4 @@
 
 add_subdirectory(one_operand)
 add_subdirectory(two_operands)
+add_subdirectory(distance)

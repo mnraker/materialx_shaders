@@ -2,13 +2,28 @@ import pxr
 import argparse
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 
+global size = 0.13
+global startx = -1.2
+global x = startx
+global y = 1.7
+global w = (size*2)*1.2
+global h = (size*2)*1.2
+global geomIndex = 0
+
 def testParseArgs():
     parse = argparse.ArgumentParser(description='Test generation')
     parse.add_argument('--output', '-o', type=str, dest='outputFile', default='test.usda', help='Output file name')
     args = parse.parse_args()
     return args
 
-def createTestStage():
+def createTestStage(asize=0.13, ax=-1.2, ay=1.7):
+    global size = asize
+    global startx = ax
+    global x = startx
+    global y = ay
+    global w = (size*2)*1.2
+    global h = (size*2)*1.2
+    global geomIndex = 0
     testArgs = testParseArgs()
     stage = Usd.Stage.CreateNew(testArgs.outputFile)
 
@@ -19,6 +34,18 @@ def createTestStage():
     UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.y)
     stage.SetDefaultPrim(stage.GetPrimAtPath("/hello"))
     return (stage, xformPrim)
+
+def nextColumn():
+    global x
+    global geomIndex
+    x += w
+    geomIndex += 1
+
+def nextRow():
+    global x
+    global y
+    x = startx
+    y -= h
 
 def HandleShaderAttribute(shader, attrName, attrValue, attrType, bindable=False):
     if isinstance(attrValue, pxr.UsdShade.Shader):
@@ -101,6 +128,33 @@ def create_MeshCube(stage, path, name, size, x, y, z):
 
     return meshPrim
 
+def create_MeshCubeNext(stage, xformPrim):
+    meshPrim = create_MeshCube(stage, xformPrim.GetPath(), 'geom'+str(geomIndex), size, x, y, 0)
+
+    nextColumn()
+
+def create_MeshPlane(stage, path, name, size, x, y, z):
+    path=HandlePath(path,name)
+    meshPrim = UsdGeom.Mesh.Define(stage, path)
+    prim = stage.GetPrimAtPath(path);
+    prim.ApplyAPI(UsdShade.MaterialBindingAPI)
+    meshPrim.CreatePointsAttr([
+        ( size+x,  size+y,  size+z),
+        (-size+x,  size+y,  size+z),
+        (-size+x, -size+y,  size+z),
+        ( size+x, -size+y,  size+z)])
+    meshPrim.CreateFaceVertexCountsAttr([4])
+    meshPrim.CreateFaceVertexIndicesAttr([0, 1, 2, 3])
+    meshPrim.CreateExtentAttr([(-1, -1, -1), (1, 1, 1)])
+    meshPrim.CreateSubdivisionSchemeAttr('none')
+
+    return meshPrim
+
+def create_MeshPlaneNext(stage, xformPrim):
+    meshPrim = create_MeshPlane(stage, xformPrim.GetPath(), 'geom'+str(geomIndex), size, x, y, 0)
+
+    nextColumn()
+
 def create_Sphere(stage,path,name):
     path = HandlePath(path,name)
     spherePrim = UsdGeom.Sphere.Define(stage, path)
@@ -108,3 +162,9 @@ def create_Sphere(stage,path,name):
     prim.ApplyAPI(UsdShade.MaterialBindingAPI)
 
     return spherePrim
+
+def create_SphereNext(stage, xformPrim):
+    spherePrim = create_Sphere(stage, xformPrim.GetPath(), 'geom'+str(geomIndex))
+    spherePrim.CreateRadiusAttr(size)
+
+    nextColumn()

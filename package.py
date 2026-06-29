@@ -102,7 +102,7 @@ conf_CI_variants = list(filter(lambda v: 'os-CentOS-7' in v, variants))
 
 requires = [
     'moonray-18.7',
-    'scene_rdl2-16.3',
+    'scene_rdl2-16.3'
 ]
 
 private_build_requires = [
@@ -113,7 +113,8 @@ private_build_requires = [
     'materialx', # for cmd/make_stub_shader
     'python',
     'orats',
-    'hdMoonray'
+    'hdMoonray',
+    'moonshine'
 ]
 
 commandstr = lambda i: "cd build/"+os.path.join(*variants[i])+"; ctest -j $(nproc)"
