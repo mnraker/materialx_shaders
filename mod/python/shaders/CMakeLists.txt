@@ -1,5 +1,5 @@
-# Copyright 2026 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
 
 message("CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
 

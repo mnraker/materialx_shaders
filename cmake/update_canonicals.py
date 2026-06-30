@@ -2,6 +2,8 @@
 
 # Copyright 2025 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
+# Copyright Contributors to the Moonray Project
 
 """
 This script is run during execution of the rats tests to generate and update canonical images.

@@ -1,5 +1,5 @@
-// Copyright 2025-2026 DreamWorks Animation LLC
 // SPDX-License-Identifier: Apache-2.0
+// Copyright Contributors to the Moonray Project
 
 /// @file g22_rec709_to_lin_rec709.cc
 

@@ -1,5 +1,5 @@
-# Copyright 2023-2024 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
 
 function(${PROJECT_NAME}_cxx_compile_features target)
     if (NOT CMAKE_CXX_COMPILER_ID STREQUAL Intel)

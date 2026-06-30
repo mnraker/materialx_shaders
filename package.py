@@ -1,5 +1,6 @@
-# Copyright 2024-2026 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
+# Copyright Contributors to the Moonray Project
 
 # -*- coding: utf-8 -*-
 import os, sys

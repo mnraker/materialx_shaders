@@ -1,5 +1,5 @@
-// Copyright 2024-2026 DreamWorks Animation LLC
 // SPDX-License-Identifier: Apache-2.0
+// Copyright Contributors to the Moonray Project
 
 /// @file "ND_swizzle_color3_color4.ispc"
 

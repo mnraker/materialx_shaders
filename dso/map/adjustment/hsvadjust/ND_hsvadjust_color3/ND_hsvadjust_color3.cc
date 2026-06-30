@@ -1,5 +1,5 @@
-// Copyright 2025 DreamWorks Animation LLC
 // SPDX-License-Identifier: Apache-2.0
+// Copyright Contributors to the Moonray Project
 
 /// @file ND_hsvadjust_color3.cc
 #include "ND_hsvadjust_color3_ispc_stubs.h"

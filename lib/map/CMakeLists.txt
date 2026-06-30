@@ -1,5 +1,5 @@
-# Copyright 2023-2025 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
 
 
 set(component moonray_mtlx_map)

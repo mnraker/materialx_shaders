@@ -1,5 +1,5 @@
-# Copyright 2023-2024 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
 
 function(${PROJECT_NAME}_cxx_compile_definitions target)
     if(CMAKE_BINARY_DIR MATCHES ".*refplat-vfx2020.*")

@@ -1,5 +1,5 @@
-# Copyright 2025 DreamWorks Animation LLC
 # SPDX-License-Identifier: Apache-2.0
+# Copyright Contributors to the Moonray Project
 
 moonray_ispc_dso(ND_range_vector3FA
 DEPENDENCIES
