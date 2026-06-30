@@ -3,37 +3,6 @@ import materialx_shaders.shaders as shaders
 
 (stage,xformPrim) = shaders.createTestStage()
 
-size = 0.2
-startx = -1.2
-starty = 1.2
-stepx = 0.7
-stepy = -0.7
-
-geometry = []
-x = startx
-y = starty
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube1',  size, x, y, 0))
-x+=stepx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube2',  size, x, y, 0))
-x+=stepx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube3',  size, x, y, 0))
-
-y+=stepy
-x=startx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube5',  size, x, y, 0))
-x+=stepx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube6',  size, x, y, 0))
-x+=stepx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube7',  size, x, y, 0))
-
-y+=stepy
-x=startx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube9',  size, x, y, 0))
-x+=stepx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube10', size, x, y, 0))
-x+=stepx
-geometry.append(shaders.create_MeshPlane(stage, xformPrim, 'cube11', size, x, y, 0))
-
 index=-1
 
 #
@@ -45,6 +14,7 @@ index=-1
 #
 # The first part is boilerplate to create a subgraph and material
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -53,12 +23,13 @@ texture = shaders.create_ND_distance_vector2(stage, material, 'my_distance_vecto
 # the rest of the test is boilerplate unless a trivial emissive material isn't sufficient
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector2 test constant in1 and default in2
 #
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -66,12 +37,13 @@ texture = shaders.create_ND_distance_vector2(stage, material, 'my_distance_vecto
 
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector2 test constant in1 and default in2
 #
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -85,17 +57,19 @@ texture = shaders.create_ND_distance_vector2(stage, material, 'my_distance_vecto
 
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector3
 #
+shaders.nextRow()
 
 #
 # ND_distance_vector3 test with default in1 and constant in2
 #
 # The first part is boilerplate to create a subgraph and material
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -104,12 +78,13 @@ texture = shaders.create_ND_distance_vector3(stage, material, 'my_distance_vecto
 # the rest of the test is boilerplate unless a trivial emissive material isn't sufficient
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector3 test with constant in1 and default in2
 #
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -117,12 +92,13 @@ texture = shaders.create_ND_distance_vector3(stage, material, 'my_distance_vecto
 
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector3 test with bound in1 and in2
 #
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -136,17 +112,19 @@ texture = shaders.create_ND_distance_vector3(stage, material, 'my_distance_vecto
 
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector4
 #
+shaders.nextRow()
 
 #
 # ND_distance_vector4 test with default in1 and constant in2
 #
 # The first part is boilerplate to create a subgraph and material
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -155,12 +133,13 @@ texture = shaders.create_ND_distance_vector4(stage, material, 'my_distance_vecto
 # the rest of the test is boilerplate unless a trivial emissive material isn't sufficient
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector4 test with constant in1 and default in2
 #
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -168,12 +147,13 @@ texture = shaders.create_ND_distance_vector4(stage, material, 'my_distance_vecto
 
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # ND_distance_vector4 test with bound in1 and in2
 #
 index+=1
+geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -189,7 +169,7 @@ texture = shaders.create_ND_distance_vector4(stage, material, 'my_distance_vecto
 
 emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader', emission=texture)
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
-UsdShade.MaterialBindingAPI(geometry[index]).Bind(material)
+UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
 #
 # save off a .usda file

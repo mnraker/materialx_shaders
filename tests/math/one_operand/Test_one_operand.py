@@ -1,7 +1,7 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 import materialx_shaders.shaders as shaders
 
-(stage,xformPrim) = shaders.createTestStage(size=size, x=x, y=y)
+(stage,xformPrim) = shaders.createTestStage()
 
 index=-1
 
