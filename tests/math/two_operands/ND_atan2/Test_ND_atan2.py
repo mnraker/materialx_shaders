@@ -1,7 +1,8 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 import materialx_shaders.shaders as shaders
+import materialx_shaders.test_utils as utils
 
-(stage,xformPrim) = shaders.createTestStage()
+(stage,xformPrim) = utils.createTestStage()
 
 index=-1
 
@@ -9,7 +10,7 @@ index=-1
 # ND_atan2_float
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.8,1.0,1.2), color_B=(0.4,0.5,0.6))
@@ -23,7 +24,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_atan2_vector2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.8,1.0,1.2), color_B=(0.4,0.5,0.6))
@@ -38,7 +39,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 #
 # test Checkerboard -> Color -> Map -> Bool -> Map
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.8,1.0,1.2), color_B=(0.4,0.5,0.6))
@@ -52,7 +53,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_atan2_vector4
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.8,1.0,1.2), color_B=(0.4,0.5,0.6))

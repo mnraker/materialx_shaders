@@ -5,10 +5,9 @@ message("CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
 
 add_custom_command(
 	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/shaders.py
-	COMMAND ${CMAKE_COMMAND} -E env RDL2_DSO_PATH=${CMAKE_BINARY_DIR}/rdl2dso:$ENV{RDL2_DSO_PATH} ${GENERATE_PYTHON_CREATE_FUNCTIONS} -p ${CMAKE_CURRENT_SOURCE_DIR}/shaders.util.py -o ${CMAKE_CURRENT_BINARY_DIR}/shaders.py
+	COMMAND ${CMAKE_COMMAND} -E env RDL2_DSO_PATH=${CMAKE_BINARY_DIR}/rdl2dso:$ENV{RDL2_DSO_PATH} ${GENERATE_PYTHON_CREATE_FUNCTIONS} -o ${CMAKE_CURRENT_BINARY_DIR}/shaders.py
     COMMENT "Generating shaders.py"
 	DEPENDS ${CMAKE_SOURCE_DIR}/mod/python/generate_python_create_functions/generate_python_create_functions
-	DEPENDS shaders.util.py
 )
 
 add_custom_target(

@@ -146,11 +146,17 @@ def generateCreateFunction(cls, clsname, obj):
     print('    shader.CreateOutput(\'{}\', {})'.format(name, typeName), flush=True, file=outfile)
     print('    return shader', flush=True, file=outfile)
 
+def printHeader():
+    print("import pxr", flush=True, file=outfile)
+    print("from pxr import Usd, UsdShade, Sdf", flush=True, file=outfile)
+    print("from materialx_shaders.test_utils import HandlePath, HandleShaderAttribute", flush=True, file=outfile)
+    print("", flush=True, file=outfile)
+
 def parseArgs():
     import argparse
     parser = argparse.ArgumentParser(description='Generate Python create functions for all scene classes')
     parser.add_argument('--output', '-o', type=str, dest='outputFilename', default='shaders.py', help='The file to write the create functions to')
-    parser.add_argument('--prepend', '-p', type=str, dest='prependFilename', default='shaders.util.py', help='The file to prepend to the output file (should contain imports and utility functions)')
+    parser.add_argument('--prepend', '-p', type=str, dest='prependFilename', help='The file to prepend to the output file (should contain imports and utility functions)')
     return parser.parse_args()
 
 def main():
@@ -161,9 +167,12 @@ def main():
     outfile = open(args.outputFilename, 'w')
 
     # copy the contents of the prepend file to the output file
-    with open(args.prependFilename, 'r') as prependFile:
-        for line in prependFile:
-            print(line, end='', flush=True, file=outfile)
+    if args.prependFilename is not None:
+        with open(args.prependFilename, 'r') as prependFile:
+            for line in prependFile:
+                print(line, end='', flush=True, file=outfile)
+
+    printHeader()
 
     context = scene_rdl2.SceneContext()
     # context.setProxyModeEnabled(True)

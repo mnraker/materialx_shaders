@@ -1,7 +1,8 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 import materialx_shaders.shaders as shaders
+import materialx_shaders.test_utils as utils
 
-(stage,xformPrim) = shaders.createTestStage()
+(stage,xformPrim) = utils.createTestStage()
 
 index=-1
 
@@ -14,7 +15,7 @@ index=-1
 #
 # The first part is boilerplate to create a subgraph and material
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -29,7 +30,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_distance_vector2 test constant in1 and default in2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -43,7 +44,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_distance_vector2 test constant in1 and default in2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -62,14 +63,14 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 #
 # ND_distance_vector3
 #
-shaders.nextRow()
+utils.nextRow()
 
 #
 # ND_distance_vector3 test with default in1 and constant in2
 #
 # The first part is boilerplate to create a subgraph and material
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -84,7 +85,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_distance_vector3 test with constant in1 and default in2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -98,7 +99,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_distance_vector3 test with bound in1 and in2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -117,14 +118,14 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 #
 # ND_distance_vector4
 #
-shaders.nextRow()
+utils.nextRow()
 
 #
 # ND_distance_vector4 test with default in1 and constant in2
 #
 # The first part is boilerplate to create a subgraph and material
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -139,7 +140,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_distance_vector4 test with constant in1 and default in2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 
@@ -153,7 +154,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_distance_vector4 test with bound in1 and in2
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName = '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 

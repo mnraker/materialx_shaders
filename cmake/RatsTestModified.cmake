@@ -51,7 +51,6 @@ endfunction()
 # ---------------------
 function(add_rats_test)
 
-    message("Using modified add_rats_test() function from ${CMAKE_CURRENT_LIST_FILE}")
     # The following KEYWORD arguments are supported:
     set(options
         DIFF_HEADERS        # Adds an extra CTest with the 'diff' label to compare the canonical
@@ -90,7 +89,7 @@ function(add_rats_test)
                             # order when multiple jobs are used via the -J option to the ctest command).
 
         DEPENDS_RAW         # List of tests that should be run before this test
-		                    # where the full test name is specified
+                            # where the full test name is specified
 
         INPUTS              # (required) Ordered list of input files the test requires.
                             # example: INPUTS scene.rdla scene.rdlb
@@ -186,8 +185,8 @@ function(add_rats_test)
         set(render_test_name "render-${exec_mode_short}-${test_basename}")
         file(MAKE_DIRECTORY ${render_dir})
 
-		set(update_dependencies "")
-		set(render_dependencies "")
+        set(update_dependencies "")
+        set(render_dependencies "")
         if(ARG_DEPENDS)
             # compute full name of dependency tests with prefix
             list(TRANSFORM ARG_DEPENDS PREPEND "update-${exec_mode_short}-" OUTPUT_VARIABLE update_dependencies)
@@ -201,12 +200,12 @@ function(add_rats_test)
                 endif()
             endforeach()
         endif()
-		if(ARG_DEPENDS_RAW)
+        if(ARG_DEPENDS_RAW)
             # provided dependencies are already full names so just append them to the respective lists of dependencies
-			set(update_dependencies "${update_dependencies};${ARG_DEPENDS_RAW}")
-			set(render_dependencies "${render_dependencies};${ARG_DEPENDS_RAW}")
+            list(APPEND update_dependencies ${ARG_DEPENDS_RAW})
+            list(APPEND render_dependencies ${ARG_DEPENDS_RAW})
             # verify that each CTest exists
-			foreach(test ${ARG_DEPENDS_RAW})
+            foreach(test IN LISTS ARG_DEPENDS_RAW)
                 if(NOT TEST ${test})
                     message(FATAL_ERROR "No test named ${test} exists to add as a dependency")
                 endif()

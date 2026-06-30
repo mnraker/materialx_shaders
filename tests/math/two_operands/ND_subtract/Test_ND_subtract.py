@@ -1,7 +1,8 @@
 from pxr import Gf, Kind, Usd, Sdf, UsdGeom, UsdShade
 import materialx_shaders.shaders as shaders
+import materialx_shaders.test_utils as utils
 
-(stage,xformPrim) = shaders.createTestStage()
+(stage,xformPrim) = utils.createTestStage()
 
 index=-1
 
@@ -9,7 +10,7 @@ index=-1
 # ND_subtract_float
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0), color_B=(0,0,0))
@@ -24,7 +25,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 #
 index+=1
 testName= '/MyMaterialTest'+str(index)
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
 texture2 = shaders.create_CheckerboardMap(stage,material,'checkerboard2', num_u_tiles=4, num_v_tiles=4, color_A=(0,.3,0.5), color_B=(0,0,0))
@@ -38,7 +39,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 #
 # test Checkerboard -> Color -> Map -> Bool -> Map
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -52,7 +53,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_vector4
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -67,13 +68,13 @@ emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
-shaders.nextRow()
+utils.nextRow()
 
 #
 # ND_subtract_color3
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -87,7 +88,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_color4
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -106,7 +107,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_matrix33
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -125,7 +126,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_matrix44
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -140,13 +141,13 @@ emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
-shaders.nextRow()
+utils.nextRow()
 
 #
 # ND_subtract_vector2FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -160,7 +161,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_vector3FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -174,7 +175,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_vector4FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -192,7 +193,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_color3FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -202,13 +203,13 @@ emissive = shaders.create_DwaEmissiveMaterial(stage, material, 'MyMaterialShader
 material.CreateSurfaceOutput().ConnectToSource(emissive.ConnectableAPI(), "surface")
 UsdShade.MaterialBindingAPI(geometry).Bind(material)
 
-shaders.nextRow()
+utils.nextRow()
 
 #
 # ND_subtract_color4FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -226,7 +227,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_matrix33FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
@@ -244,7 +245,7 @@ UsdShade.MaterialBindingAPI(geometry).Bind(material)
 # ND_subtract_matrix44FA
 #
 index+=1
-geometry = shaders.create_MeshPlaneNext(stage, xformPrim)
+geometry = utils.create_MeshPlaneNext(stage, xformPrim)
 testName= '/MyMaterialTest'+str(index)
 material = UsdShade.Material.Define(stage,testName)
 texture1 = shaders.create_CheckerboardMap(stage,material,'checkerboard1', num_u_tiles=2, num_v_tiles=2, color_A=(0.7,1.0,0.5), color_B=(0,0,0))
