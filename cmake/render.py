@@ -2,7 +2,6 @@
 
 # SPDX-License-Identifier: Apache-2.0
 # Copyright Contributors to the Moonray Project
-# Copyright Contributors to the Moonray Project
 
 """
 Wrapper script for moonray renderer that injects -threads argument from

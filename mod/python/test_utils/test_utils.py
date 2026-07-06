@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright Contributors to the Moonray Project
-# Copyright Contributors to the Moonray Project
 import pxr
 import argparse
 from pxr import Usd, UsdGeom, UsdShade
@@ -12,6 +11,7 @@ gy = 1.7
 gw = (gsize*2)*1.2
 gh = (gsize*2)*1.2
 geomIndex = 0
+materialIndex = 0
 
 def HandleShaderAttribute(shader, attrName, attrValue, attrType, bindable=False):
     if isinstance(attrValue, pxr.UsdShade.Shader):
@@ -47,6 +47,7 @@ def createTestStage(size=0.13, x=-1.2, y=1.7):
     global gw
     global gh
     global geomIndex
+    global materialIndex
     gsize = size
     gstartx = x
     gx = x
@@ -54,6 +55,7 @@ def createTestStage(size=0.13, x=-1.2, y=1.7):
     gw = (gsize*2)*1.2
     gh = (gsize*2)*1.2
     geomIndex = 0
+    materialIndex = 0
     testArgs = testParseArgs()
     stage = Usd.Stage.CreateNew(testArgs.outputFile)
 
@@ -153,4 +155,14 @@ def create_MeshPlaneNext(stage, xformPrim):
 
     return meshPrim
 
+def create_UniqueMaterial(stage):
+    global materialIndex
+    materialPrim = UsdShade.Material.Define(stage, '/TestMaterial'+str(materialIndex))
+    materialIndex += 1
+    return materialPrim
 
+
+def bindMaterialToGeom(surfaceShader, materialPrim, geomPrim):
+    materialPrim.CreateSurfaceOutput().ConnectToSource(surfaceShader.ConnectableAPI(), 'surface')
+    materialBindingAPI = UsdShade.MaterialBindingAPI(geomPrim)
+    materialBindingAPI.Bind(materialPrim)
