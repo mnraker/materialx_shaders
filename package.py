@@ -101,8 +101,8 @@ conf_rats_variants = variants[0:2]
 conf_CI_variants = list(filter(lambda v: 'os-CentOS-7' in v, variants))
 
 requires = [
-    'moonray-18.7',
-    'scene_rdl2-16.3'
+    'moonray-18.10',
+    'scene_rdl2-16.6'
 ]
 
 private_build_requires = [

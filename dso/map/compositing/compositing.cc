@@ -42,8 +42,7 @@ using namespace scene_rdl2::rdl2;
 #define UNIQUE_ID_mix          317
 
 // All compositing nodes have the same defaults
-#define FG_DEFAULT_FLOAT 0.0
-#define BG_DEFAULT_FLOAT 0.0
+#define IN_DEFAULT_FLOAT 0.0
 #define MIX_DEFAULT_FLOAT 1.0
 
 //
@@ -52,90 +51,90 @@ using namespace scene_rdl2::rdl2;
 //
 #if STRING_CMP(VARIANT,float)
 
-#define FG_TYPE Float
-#define FG_DEFAULT FG_DEFAULT_FLOAT
-#define BG_TYPE Float
-#define BG_DEFAULT BG_DEFAULT_FLOAT
+#define IN_TYPE Float
+#define IN_DEFAULT IN_DEFAULT_FLOAT
+#define MIX_TYPE Float
+#define MIX_DEFAULT MIX_DEFAULT_FLOAT
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,color3)
 
-#define FG_TYPE Color
-#define FG_DEFAULT Color(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Color
-#define BG_DEFAULT Color(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Color
+#define IN_DEFAULT Color(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Float
+#define MIX_DEFAULT MIX_DEFAULT_FLOAT
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,color4)
 
-#define FG_TYPE Rgba
-#define FG_DEFAULT Rgba(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Rgba
-#define BG_DEFAULT Rgba(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Rgba
+#define IN_DEFAULT Rgba(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Float
+#define MIX_DEFAULT MIX_DEFAULT_FLOAT
 #define OUT_TYPE TYPE_RGBA
 
 #elif STRING_CMP(VARIANT,color3_color3)
 
-#define FG_TYPE Color
-#define FG_DEFAULT Color(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Color
-#define BG_DEFAULT Color(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Color
+#define IN_DEFAULT Color(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Color
+#define MIX_DEFAULT Color(MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT)
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,color4_color4)
 
-#define FG_TYPE Rgba
-#define FG_DEFAULT Rgba(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Rgba
-#define BG_DEFAULT Rgba(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
+#define IN_TYPE Rgba
+#define IN_DEFAULT Rgba(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Rgba
+#define MIX_DEFAULT Rgba(MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT)
 #define OUT_TYPE TYPE_RGBA
 
 #elif STRING_CMP(VARIANT,vector2)
 
-#define FG_TYPE Vec2f
-#define FG_DEFAULT Vec2f(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Vec2f
-#define BG_DEFAULT Vec2f(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Vec2f
+#define IN_DEFAULT Vec2f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Float
+#define MIX_DEFAULT MIX_DEFAULT_FLOAT
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,vector2_vector2)
 
-#define FG_TYPE Vec2f
-#define FG_DEFAULT Vec2f(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Vec2f
-#define BG_DEFAULT Vec2f(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Vec2f
+#define IN_DEFAULT Vec2f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Vec2f
+#define MIX_DEFAULT Vec2f(MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT)
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,vector3)
 
-#define FG_TYPE Vec3f
-#define FG_DEFAULT Vec3f(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Vec3f
-#define BG_DEFAULT Vec3f(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Vec3f
+#define IN_DEFAULT Vec3f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Float
+#define MIX_DEFAULT MIX_DEFAULT_FLOAT
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,vector3_vector3)
 
-#define FG_TYPE Vec3f
-#define FG_DEFAULT Vec3f(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Vec3f
-#define BG_DEFAULT Vec3f(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT)
+#define IN_TYPE Vec3f
+#define IN_DEFAULT Vec3f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Vec3f
+#define MIX_DEFAULT Vec3f(MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT)
 #define OUT_TYPE TYPE_RGB
 
 #elif STRING_CMP(VARIANT,vector4)
 
-#define FG_TYPE Vec4f
-#define FG_DEFAULT Vec4f(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Vec4f
-#define BG_DEFAULT Vec4f(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
+#define IN_TYPE Vec4f
+#define IN_DEFAULT Vec4f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Float
+#define MIX_DEFAULT MIX_DEFAULT_FLOAT
 #define OUT_TYPE TYPE_VEC4F
 
 #elif STRING_CMP(VARIANT,vector4_vector4)
 
-#define FG_TYPE Vec4f
-#define FG_DEFAULT Vec4f(FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
-#define BG_TYPE Vec4f
-#define BG_DEFAULT Vec4f(BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,BG_DEFAULT_FLOAT,FG_DEFAULT_FLOAT)
+#define IN_TYPE Vec4f
+#define IN_DEFAULT Vec4f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
+#define MIX_TYPE Rgba
+#define MIX_DEFAULT Vec4f(MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT)
 #define OUT_TYPE TYPE_VEC4F
 
 #elif defined(VARIANT)
@@ -144,21 +143,17 @@ using namespace scene_rdl2::rdl2;
 #error VARIANT isn't set or is set to an invalid value
 #endif
 
-#define FG_EVAL CONCAT2(eval,FG_TYPE)
-#define BG_EVAL CONCAT2(eval,BG_TYPE)
-
-// MIX is always Float
-#define MIX_TYPE Float
-#define MIX_DEFAULT MIX_DEFAULT_FLOAT
+#define IN_EVAL CONCAT2(eval,IN_TYPE)
+#define MIX_EVAL CONCAT2(eval,MIX_TYPE)
 
 #include <moonray/rendering/shading/MapApi.h>
 //
 // Deal with multiple output types mapping to Color
 //
-#if STRING_CMP(FG_TYPE,Float) || STRING_CMP(FG_TYPE,Color)
+#if STRING_CMP(IN_TYPE,Float) || STRING_CMP(IN_TYPE,Color) || STRING_CMP(IN_TYPE,Vec2f) || STRING_CMP(IN_TYPE,Vec3f)
 #define RETURN_TYPE Color
 #else
-#define RETURN_TYPE FG_TYPE
+#define RETURN_TYPE IN_TYPE
 #endif
 
 
@@ -173,30 +168,30 @@ MTLX_ATTR_DECLARE_BEGIN
     AttributeKey<Bool> disableAttr;
 #if STRING_CMP(OPERATION,inside) || STRING_CMP(OPERATION,outside)
     // inside/outside use 'in' and 'mask' parameters
-    AttributeKey<FG_TYPE> inAttr;
-    AttributeKey<BG_TYPE> maskAttr;
+    AttributeKey<IN_TYPE> inAttr;
+    AttributeKey<IN_TYPE> maskAttr;
 #elif STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
     // premult/unpremult use single 'in' parameter
-    AttributeKey<FG_TYPE> inAttr;
+    AttributeKey<IN_TYPE> inAttr;
 #else
     // All other operations use 'fg', 'bg', and 'mix'
-    AttributeKey<FG_TYPE> fgAttr;
-    AttributeKey<BG_TYPE> bgAttr;
-    AttributeKey<Float> mixAttr;
+    AttributeKey<IN_TYPE> fgAttr;
+    AttributeKey<IN_TYPE> bgAttr;
+    AttributeKey<MIX_TYPE> mixAttr;
 #endif
 MTLX_ATTR_DECLARE_END
 
 MTLX_ATTR_DEFINE_BEGIN
     disableAttr = sceneClass.declareAttribute<Bool>("disable", 0, FLAGS_NONE, INTERFACE_GENERIC, {});
 #if STRING_CMP(OPERATION,inside) || STRING_CMP(OPERATION,outside)
-    inAttr = sceneClass.declareAttribute<FG_TYPE>("in", FG_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
-    maskAttr = sceneClass.declareAttribute<BG_TYPE>("mask", BG_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
+    inAttr = sceneClass.declareAttribute<IN_TYPE>("in", IN_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
+    maskAttr = sceneClass.declareAttribute<IN_TYPE>("mask", IN_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
 #elif STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
-    inAttr = sceneClass.declareAttribute<FG_TYPE>("in", FG_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
+    inAttr = sceneClass.declareAttribute<IN_TYPE>("in", IN_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
 #else
-    fgAttr = sceneClass.declareAttribute<FG_TYPE>("fg", FG_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
-    bgAttr = sceneClass.declareAttribute<BG_TYPE>("bg", BG_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
-    mixAttr = sceneClass.declareAttribute<Float>("mix", MIX_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
+    fgAttr = sceneClass.declareAttribute<IN_TYPE>("fg", IN_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
+    bgAttr = sceneClass.declareAttribute<IN_TYPE>("bg", IN_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
+    mixAttr = sceneClass.declareAttribute<MIX_TYPE>("mix", MIX_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
 #endif
 MTLX_ATTR_DEFINE_END
 
@@ -218,7 +213,7 @@ private:
 RDL2_DSO_CLASS_END(SHADER_NAME)
 
 SHADER_NAME::SHADER_NAME(const SceneClass& sceneClass,
-        const std::string& name) :
+                         const std::string& name) :
     Parent(sceneClass, name)
 {
     // the functions pointers are unions so it doesn't
@@ -283,33 +278,35 @@ doOperation(float fg, float bg)
 }
 
 void
-SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
-                 const moonray::shading::State& state, RETURN_TYPE* sample)
+SHADER_NAME::sample(const Map* self,
+                          moonray::shading::TLState *tls,
+                    const moonray::shading::State& state,
+                    RETURN_TYPE* sample)
 {
     const SHADER_NAME* me = static_cast<const SHADER_NAME*>(self);
 
-    FG_TYPE fgValue;
-    BG_TYPE bgValue;
-    Float mixValue;
-    
+    IN_TYPE fgValue;
+    IN_TYPE bgValue;
+    MIX_TYPE mixValue;
+
 #if STRING_CMP(OPERATION,inside) || STRING_CMP(OPERATION,outside)
     // inside/outside use 'in' and 'mask' parameters
-    fgValue = FG_EVAL(me, inAttr, tls, state);
-    bgValue = BG_EVAL(me, maskAttr, tls, state);
+    fgValue = IN_EVAL(me, inAttr, tls, state);
+    bgValue = IN_EVAL(me, maskAttr, tls, state);
     mixValue = 1.0f;  // No mix parameter for inside/outside
 #elif STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
     // premult/unpremult use single 'in' parameter
-    fgValue = FG_EVAL(me, inAttr, tls, state);
-    bgValue = BG_TYPE(0);  // Not used
+    fgValue = IN_EVAL(me, inAttr, tls, state);
+    bgValue = IN_TYPE(0);  // Not used
     mixValue = 1.0f;  // No mix parameter for premult/unpremult
 #else
     // All other operations use 'fg', 'bg', and 'mix'
-    fgValue = FG_EVAL(me, fgAttr, tls, state);
-    bgValue = BG_EVAL(me, bgAttr, tls, state);
-    mixValue = evalFloat(me, mixAttr, tls, state);
+    fgValue = IN_EVAL(me, fgAttr, tls, state);
+    bgValue = IN_EVAL(me, bgAttr, tls, state);
+    mixValue = MIX_EVAL(me, mixAttr, tls, state);
 #endif
 
-    BG_TYPE outValue;
+    IN_TYPE outValue;
     if (me->mIspc.disableMode) {
 #if STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
         outValue = fgValue;  // For premult/unpremult, disable returns input
@@ -337,7 +334,9 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
         tmp.r = doOperation(fgValue.r, bgValue.r);
         tmp.g = doOperation(fgValue.g, bgValue.g);
         tmp.b = doOperation(fgValue.b, bgValue.b);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.r = lerp(bgValue.r, tmp.r, mixValue.r);
+        outValue.g = lerp(bgValue.g, tmp.g, mixValue.g);
+        outValue.b = lerp(bgValue.b, tmp.b, mixValue.b);
         // mimic Karma behavior by clamping negative values post-lerp
         outValue.r = max(0.0f, outValue.r);
         outValue.g = max(0.0f, outValue.g);
@@ -346,28 +345,21 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
         // Color4 operations have different behaviors depending on the operation type
         Rgba tmp;
 
-        // Operations that apply component-wise to all channels (including alpha):
-        // burn, dodge, screen, difference, plus, minus, overlay
-#if STRING_CMP(OPERATION,burn) || STRING_CMP(OPERATION,dodge) || STRING_CMP(OPERATION,screen) || \
-    STRING_CMP(OPERATION,difference) || STRING_CMP(OPERATION,plus) || STRING_CMP(OPERATION,minus) || \
-    STRING_CMP(OPERATION,overlay)
-        tmp.r = doOperation(fgValue.r, bgValue.r);
-        tmp.g = doOperation(fgValue.g, bgValue.g);
-        tmp.b = doOperation(fgValue.b, bgValue.b);
-        tmp.a = doOperation(fgValue.a, bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
         // Operations with alpha compositing (use whole color4 with alpha as scalar):
         // in, mask, out, over
-#elif STRING_CMP(OPERATION,in)
-        // Reference: (fg * bg.a * mix) + (bg * (1-mix))
-        tmp = fgValue * bgValue.a;
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
+#if STRING_CMP(OPERATION,in)
+        tmp.r = fgValue.r * bgValue.a;
+        tmp.g = fgValue.g * bgValue.a;
+        tmp.b = fgValue.b * bgValue.a;
+        tmp.a = fgValue.a * bgValue.a;
+        outValue = lerp(bgValue, tmp, mixValue);
 
 #elif STRING_CMP(OPERATION,mask)
-        // Reference: (bg * fg.a * mix) + (bg * (1-mix))
-        tmp = bgValue * fgValue.a;
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
+        tmp.r = bgValue.r * fgValue.a;
+        tmp.g = bgValue.g * fgValue.a;
+        tmp.b = bgValue.b * fgValue.a;
+        tmp.a = fgValue.a * bgValue.a;
+        outValue = lerp(bgValue, tmp, mixValue);
 
 #elif STRING_CMP(OPERATION,out)
         // Reference: (fg * (1-bg.a) * mix) + (bg * (1-mix))
@@ -448,12 +440,7 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
         tmp.a = fgValue.a * (1.0f - bgValue.a);
         outValue = lerp(bgValue, tmp, mixValue);
 
-#elif STRING_CMP(OPERATION,mix)
-        // Reference: mix(bg, fg, mix) - built-in lerp function
-        outValue = lerp(bgValue, fgValue, mixValue);
-
 #else
-        // Shouldn't reach here
         tmp.r = doOperation(fgValue.r, bgValue.r);
         tmp.g = doOperation(fgValue.g, bgValue.g);
         tmp.b = doOperation(fgValue.b, bgValue.b);
@@ -469,114 +456,15 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
 #endif
 
 #elif STRING_CMP(VARIANT,color4_color4)
-        // Same as color4 variant
         Rgba tmp;
-
-#if STRING_CMP(OPERATION,burn) || STRING_CMP(OPERATION,dodge) || STRING_CMP(OPERATION,screen) || \
-    STRING_CMP(OPERATION,difference) || STRING_CMP(OPERATION,plus) || STRING_CMP(OPERATION,minus) || \
-    STRING_CMP(OPERATION,overlay)
         tmp.r = doOperation(fgValue.r, bgValue.r);
         tmp.g = doOperation(fgValue.g, bgValue.g);
         tmp.b = doOperation(fgValue.b, bgValue.b);
         tmp.a = doOperation(fgValue.a, bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,in)
-        tmp = fgValue * bgValue.a;
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,mask)
-        tmp = bgValue * fgValue.a;
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,out)
-        tmp = fgValue * (1.0f - bgValue.a);
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,over)
-        tmp = fgValue + bgValue * (1.0f - fgValue.a);
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,matte)
-        tmp.r = fgValue.r * fgValue.a + bgValue.r * (1.0f - fgValue.a);
-        tmp.g = fgValue.g * fgValue.a + bgValue.g * (1.0f - fgValue.a);
-        tmp.b = fgValue.b * fgValue.a + bgValue.b * (1.0f - fgValue.a);
-        tmp.a = fgValue.a + bgValue.a * (1.0f - fgValue.a);
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,disjointover)
-        float summedAlpha = fgValue.a + bgValue.a;
-        if (summedAlpha <= 1.0f) {
-            tmp.r = fgValue.r + bgValue.r;
-            tmp.g = fgValue.g + bgValue.g;
-            tmp.b = fgValue.b + bgValue.b;
-        } else {
-            if (fabsf(bgValue.a) < sEpsilon) {
-                tmp.r = 0.0f;
-                tmp.g = 0.0f;
-                tmp.b = 0.0f;
-            } else {
-                float x = (1.0f - fgValue.a) / bgValue.a;
-                tmp.r = fgValue.r + bgValue.r * x;
-                tmp.g = fgValue.g + bgValue.g * x;
-                tmp.b = fgValue.b + bgValue.b * x;
-            }
-        }
-        tmp.a = min(summedAlpha, 1.0f);
-        outValue.r = tmp.r * mixValue + bgValue.r * (1.0f - mixValue);
-        outValue.g = tmp.g * mixValue + bgValue.g * (1.0f - mixValue);
-        outValue.b = tmp.b * mixValue + bgValue.b * (1.0f - mixValue);
-        outValue.a = tmp.a * mixValue + bgValue.a * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,premult)
-        outValue.r = fgValue.r * fgValue.a;
-        outValue.g = fgValue.g * fgValue.a;
-        outValue.b = fgValue.b * fgValue.a;
-        outValue.a = fgValue.a;
-
-#elif STRING_CMP(OPERATION,unpremult)
-        if (fabsf(fgValue.a) < sEpsilon) {
-            outValue.r = 0.0f;
-            outValue.g = 0.0f;
-            outValue.b = 0.0f;
-        } else {
-            outValue.r = fgValue.r / fgValue.a;
-            outValue.g = fgValue.g / fgValue.a;
-            outValue.b = fgValue.b / fgValue.a;
-        }
-        outValue.a = fgValue.a;
-
-#elif STRING_CMP(OPERATION,inside)
-        tmp.r = fgValue.r * bgValue.r;
-        tmp.g = fgValue.g * bgValue.g;
-        tmp.b = fgValue.b * bgValue.b;
-        tmp.a = fgValue.a * bgValue.a;
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,outside)
-        tmp.r = fgValue.r * (1.0f - bgValue.r);
-        tmp.g = fgValue.g * (1.0f - bgValue.g);
-        tmp.b = fgValue.b * (1.0f - bgValue.b);
-        tmp.a = fgValue.a * (1.0f - bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,mix)
-        outValue = lerp(bgValue, fgValue, mixValue);
-
-#else
-        tmp.r = doOperation(fgValue.r, bgValue.r);
-        tmp.g = doOperation(fgValue.g, bgValue.g);
-        tmp.b = doOperation(fgValue.b, bgValue.b);
-        tmp.a = doOperation(fgValue.a, bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-#endif
-#if !STRING_CMP(OPERATION,premult) && !STRING_CMP(OPERATION,unpremult)
-        outValue.r = max(0.0f, outValue.r);
-        outValue.g = max(0.0f, outValue.g);
-        outValue.b = max(0.0f, outValue.b);
-        outValue.a = max(0.0f, outValue.a);
-#endif
-
+        outValue.r = max(0.0f, lerp(bgValue.r, tmp.r, mixValue.r));
+        outValue.g = max(0.0f, lerp(bgValue.g, tmp.g, mixValue.g));
+        outValue.b = max(0.0f, lerp(bgValue.b, tmp.b, mixValue.b));
+        outValue.a = max(0.0f, lerp(bgValue.a, tmp.a, mixValue.a));
 #elif STRING_CMP(VARIANT,vector2)
         Vec2f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -586,7 +474,8 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
         Vec2f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue);
 #elif STRING_CMP(VARIANT,vector3)
         Vec3f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -598,7 +487,9 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue);
+        outValue.z = lerp(bgValue.z, tmp.z, mixValue);
 #elif STRING_CMP(VARIANT,vector4)
         Vec4f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -612,15 +503,22 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
         tmp.w = doOperation(fgValue.w, bgValue.w);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue);
+        outValue.z = lerp(bgValue.z, tmp.z, mixValue);
+        outValue.w = lerp(bgValue.w, tmp.w, mixValue);
 #endif
     }
 
     //
     // Convert the output to the return type if necessary.
     //
-#if STRING_CMP(FG_TYPE,Float)
+#if STRING_CMP(IN_TYPE,Float)
     *sample = Color(outValue, outValue, outValue);
+#elif STRING_CMP(IN_TYPE,Vec2f)
+    *sample = Color(outValue.x, outValue.y, 0.0);
+#elif STRING_CMP(IN_TYPE,Vec3f)
+    *sample = Color(outValue.x, outValue.y, outValue.z);
 #else
     *sample = outValue;
 #endif

@@ -7,7 +7,7 @@
 
 // supports the following compositing operations with fg, bg, and mix inputs
 // use #define OPERATION before including this file
-// burn, dodge, screen, difference, plus, minus, overlay, inside, outside
+// burn, dodge, screen, difference, plus, minus, overlay
 //
 // supports the following variants:
 // use #define VARIANT before including this file
@@ -25,8 +25,6 @@
 #define UNIQUE_ID_plus         304
 #define UNIQUE_ID_minus        305
 #define UNIQUE_ID_overlay      306
-#define UNIQUE_ID_inside       307
-#define UNIQUE_ID_outside      308
 #define UNIQUE_ID_in           309
 #define UNIQUE_ID_mask         310
 #define UNIQUE_ID_matte        311
@@ -43,80 +41,80 @@
 //
 #if STRING_CMP(VARIANT,float)
 
-#define FG_TYPE Float
-#define FG_ATTRKEY FloatAttrKeyISPC
-#define BG_TYPE Float
-#define BG_ATTRKEY FloatAttrKeyISPC
+#define IN_TYPE Float
+#define IN_ATTRKEY FloatAttrKeyISPC
+#define MIX_TYPE Float
+#define MIX_ATTRKEY FloatAttrKeyISPC
 
 #elif STRING_CMP(VARIANT,color3)
 
-#define FG_TYPE Color
-#define FG_ATTRKEY Float3AttrKeyISPC
-#define BG_TYPE Color
-#define BG_ATTRKEY Float3AttrKeyISPC
+#define IN_TYPE Color
+#define IN_ATTRKEY Float3AttrKeyISPC
+#define MIX_TYPE Float
+#define MIX_ATTRKEY FloatAttrKeyISPC
 
 #elif STRING_CMP(VARIANT,color4)
 
-#define FG_TYPE Col4f
-#define FG_ATTRKEY Float4AttrKeyISPC
-#define BG_TYPE Col4f
-#define BG_ATTRKEY Float4AttrKeyISPC
+#define IN_TYPE Col4f
+#define IN_ATTRKEY Float4AttrKeyISPC
+#define MIX_TYPE Float
+#define MIX_ATTRKEY FloatAttrKeyISPC
 
 #elif STRING_CMP(VARIANT,color3_color3)
 
-#define FG_TYPE Color
-#define FG_ATTRKEY Float3AttrKeyISPC
-#define BG_TYPE Color
-#define BG_ATTRKEY Float3AttrKeyISPC
+#define IN_TYPE Color
+#define IN_ATTRKEY Float3AttrKeyISPC
+#define MIX_TYPE Color
+#define MIX_ATTRKEY Float3AttrKeyISPC
 
 #elif STRING_CMP(VARIANT,color4_color4)
 
-#define FG_TYPE Col4f
-#define FG_ATTRKEY Float4AttrKeyISPC
-#define BG_TYPE Col4f
-#define BG_ATTRKEY Float4AttrKeyISPC
+#define IN_TYPE Col4f
+#define IN_ATTRKEY Float4AttrKeyISPC
+#define MIX_TYPE Col4f
+#define MIX_ATTRKEY Float4AttrKeyISPC
 
 #elif STRING_CMP(VARIANT,vector2)
 
-#define FG_TYPE Vec2f
-#define FG_ATTRKEY Float2AttrKeyISPC
-#define BG_TYPE Vec2f
-#define BG_ATTRKEY Float2AttrKeyISPC
+#define IN_TYPE Vec2f
+#define IN_ATTRKEY Float2AttrKeyISPC
+#define MIX_TYPE Float
+#define MIX_ATTRKEY FloatAttrKeyISPC
 
 #elif STRING_CMP(VARIANT,vector2_vector2)
 
-#define FG_TYPE Vec2f
-#define FG_ATTRKEY Float2AttrKeyISPC
-#define BG_TYPE Vec2f
-#define BG_ATTRKEY Float2AttrKeyISPC
+#define IN_TYPE Vec2f
+#define IN_ATTRKEY Float2AttrKeyISPC
+#define MIX_TYPE Vec2f
+#define MIX_ATTRKEY Float2AttrKeyISPC
 
 #elif STRING_CMP(VARIANT,vector3)
 
-#define FG_TYPE Vec3f
-#define FG_ATTRKEY Float3AttrKeyISPC
-#define BG_TYPE Vec3f
-#define BG_ATTRKEY Float3AttrKeyISPC
+#define IN_TYPE Vec3f
+#define IN_ATTRKEY Float3AttrKeyISPC
+#define MIX_TYPE Float
+#define MIX_ATTRKEY FloatAttrKeyISPC
 
 #elif STRING_CMP(VARIANT,vector3_vector3)
 
-#define FG_TYPE Vec3f
-#define FG_ATTRKEY Float3AttrKeyISPC
-#define BG_TYPE Vec3f
-#define BG_ATTRKEY Float3AttrKeyISPC
+#define IN_TYPE Vec3f
+#define IN_ATTRKEY Float3AttrKeyISPC
+#define MIX_TYPE Vec3f
+#define MIX_ATTRKEY Float3AttrKeyISPC
 
 #elif STRING_CMP(VARIANT,vector4)
 
-#define FG_TYPE Vec4f
-#define FG_ATTRKEY Float4AttrKeyISPC
-#define BG_TYPE Vec4f
-#define BG_ATTRKEY Float4AttrKeyISPC
+#define IN_TYPE Vec4f
+#define IN_ATTRKEY Float4AttrKeyISPC
+#define MIX_TYPE Float
+#define MIX_ATTRKEY FloatAttrKeyISPC
 
 #elif STRING_CMP(VARIANT,vector4_vector4)
 
-#define FG_TYPE Vec4f
-#define FG_ATTRKEY Float4AttrKeyISPC
-#define BG_TYPE Vec4f
-#define BG_ATTRKEY Float4AttrKeyISPC
+#define IN_TYPE Vec4f
+#define IN_ATTRKEY Float4AttrKeyISPC
+#define MIX_TYPE Vec4f
+#define MIX_ATTRKEY Float4AttrKeyISPC
 
 #elif defined(VARIANT)
 #error VARIANT is set to an invalid value
@@ -124,32 +122,32 @@
 #error VARIANT isn't set
 #endif
 
-#define FG_EVAL CONCAT2(eval,FG_TYPE)
-#define BG_EVAL CONCAT2(eval,BG_TYPE)
+#define IN_EVAL CONCAT2(eval,IN_TYPE)
+#define MIX_EVAL CONCAT2(eval,MIX_TYPE)
 
 // Define constructors for zero initialization
-#if STRING_CMP(FG_TYPE,Float)
-#define BG_TYPE_ctor(x) x
-#elif STRING_CMP(FG_TYPE,Color)
-#define BG_TYPE_ctor(x) Color_ctor(x, x, x)
-#elif STRING_CMP(FG_TYPE,Col4f)
-#define BG_TYPE_ctor(x) Col4f_ctor(x, x, x, x)
-#elif STRING_CMP(FG_TYPE,Vec2f)
-#define BG_TYPE_ctor(x) Vec2f_ctor(x, x)
-#elif STRING_CMP(FG_TYPE,Vec3f)
-#define BG_TYPE_ctor(x) Vec3f_ctor(x, x, x)
-#elif STRING_CMP(FG_TYPE,Vec4f)
-#define BG_TYPE_ctor(x) Vec4f_ctor(x, x, x, x)
+#if STRING_CMP(IN_TYPE,Float)
+#define IN_TYPE_ctor(x) x
+#elif STRING_CMP(IN_TYPE,Color)
+#define IN_TYPE_ctor(x) Color_ctor(x, x, x)
+#elif STRING_CMP(IN_TYPE,Col4f)
+#define IN_TYPE_ctor(x) Col4f_ctor(x, x, x, x)
+#elif STRING_CMP(IN_TYPE,Vec2f)
+#define IN_TYPE_ctor(x) Vec2f_ctor(x, x)
+#elif STRING_CMP(IN_TYPE,Vec3f)
+#define IN_TYPE_ctor(x) Vec3f_ctor(x, x, x)
+#elif STRING_CMP(IN_TYPE,Vec4f)
+#define IN_TYPE_ctor(x) Vec4f_ctor(x, x, x, x)
 #endif
 
 #include <moonray/rendering/shading/ispc/MapApi.isph>
 //
 // Deal with multiple output types mapping to Color
 //
-#if STRING_CMP(FG_TYPE,Float) || STRING_CMP(FG_TYPE,Color)
+#if STRING_CMP(IN_TYPE,Float) || STRING_CMP(IN_TYPE,Color) || STRING_CMP(IN_TYPE,Vec2f) || STRING_CMP(IN_TYPE,Vec3f)
 #define RETURN_TYPE Color
 #else
-#define RETURN_TYPE FG_TYPE
+#define RETURN_TYPE IN_TYPE
 #endif
 
 //
@@ -178,10 +176,6 @@ float doOperation(varying float& fg, varying float& bg)
     return bg - fg;
 #elif STRING_CMP(OPERATION,overlay)
     return bg < 0.5f ? 2.0f * fg * bg : 1.0f - 2.0f * (1.0f - fg) * (1.0f - bg);
-#elif STRING_CMP(OPERATION,inside)
-    return fg * bg;
-#elif STRING_CMP(OPERATION,outside)
-    return fg * (1.0f - bg);
 #elif STRING_CMP(OPERATION,in)
     return fg * bg;
 #elif STRING_CMP(OPERATION,mask)
@@ -207,18 +201,14 @@ float doOperation(varying float& fg, varying float& bg)
 #endif
 }
 
-#if STRING_CMP(OPERATION,inside) || STRING_CMP(OPERATION,outside)
-// inside/outside use 'in' and 'mask' parameters
-extern uniform FG_ATTRKEY* uniform inAttr;
-extern uniform BG_ATTRKEY* uniform maskAttr;
-#elif STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
+#if STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
 // premult/unpremult use single 'in' parameter
-extern uniform FG_ATTRKEY* uniform inAttr;
+extern uniform IN_ATTRKEY* uniform inAttr;
 #else
 // All other operations use 'fg', 'bg', and 'mix'
-extern uniform FG_ATTRKEY* uniform fgAttr;
-extern uniform BG_ATTRKEY* uniform bgAttr;
-extern uniform FloatAttrKeyISPC* uniform mixAttr;
+extern uniform IN_ATTRKEY* uniform fgAttr;
+extern uniform IN_ATTRKEY* uniform bgAttr;
+extern uniform MIX_ATTRKEY* uniform mixAttr;
 #endif
 
 static varying RETURN_TYPE
@@ -228,28 +218,23 @@ sample(const uniform Map*            uniform map,
 {
     const uniform SHADER_NAME* uniform me = MAP_GET_ISPC_CPTR(SHADER_NAME, map);
 
-    varying FG_TYPE fgValue;
-    varying BG_TYPE bgValue;
-    varying float mixValue;
-    
-#if STRING_CMP(OPERATION,inside) || STRING_CMP(OPERATION,outside)
-    // inside/outside use 'in' and 'mask' parameters
-    fgValue = FG_EVAL(map, tls, state, inAttr);
-    bgValue = BG_EVAL(map, tls, state, maskAttr);
-    mixValue = 1.0f;  // No mix parameter for inside/outside
-#elif STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
+    varying IN_TYPE fgValue;
+    varying IN_TYPE bgValue;
+    varying MIX_TYPE mixValue;
+
+#if STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
     // premult/unpremult use single 'in' parameter
-    fgValue = FG_EVAL(map, tls, state, inAttr);
-    bgValue = BG_TYPE_ctor(0);  // Not used
+    fgValue = IN_EVAL(map, tls, state, inAttr);
+    bgValue = IN_TYPE_ctor(0);  // Not used
     mixValue = 1.0f;  // No mix parameter for premult/unpremult
 #else
     // All other operations use 'fg', 'bg', and 'mix'
-    fgValue = FG_EVAL(map, tls, state, fgAttr);
-    bgValue = BG_EVAL(map, tls, state, bgAttr);
-    mixValue = evalFloat(map, tls, state, mixAttr);
+    fgValue = IN_EVAL(map, tls, state, fgAttr);
+    bgValue = IN_EVAL(map, tls, state, bgAttr);
+    mixValue = MIX_EVAL(map, tls, state, mixAttr);
 #endif
 
-    varying BG_TYPE outValue;
+    varying IN_TYPE outValue;
     if (me->disableMode) {
 #if STRING_CMP(OPERATION,premult) || STRING_CMP(OPERATION,unpremult)
         // For premult/unpremult, disable returns input
@@ -284,29 +269,21 @@ sample(const uniform Map*            uniform map,
         tmp.r = doOperation(fgValue.r, bgValue.r);
         tmp.g = doOperation(fgValue.g, bgValue.g);
         tmp.b = doOperation(fgValue.b, bgValue.b);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.r = lerp(bgValue.r, tmp.r, mixValue.r);
+        outValue.g = lerp(bgValue.g, tmp.g, mixValue.g);
+        outValue.b = lerp(bgValue.b, tmp.b, mixValue.b);
         // mimic Karma behavior by clamping negative values post-lerp
         outValue.r = max(0.0f, outValue.r);
         outValue.g = max(0.0f, outValue.g);
         outValue.b = max(0.0f, outValue.b);
+
 #elif STRING_CMP(VARIANT,color4)
         // Color4 operations have different behaviors depending on the operation type
         varying Col4f tmp;
 
-        // Operations that apply component-wise to all channels (including alpha):
-        // burn, dodge, screen, difference, plus, minus, overlay
-#if STRING_CMP(OPERATION,burn) || STRING_CMP(OPERATION,dodge) || STRING_CMP(OPERATION,screen) || \
-    STRING_CMP(OPERATION,difference) || STRING_CMP(OPERATION,plus) || STRING_CMP(OPERATION,minus) || \
-    STRING_CMP(OPERATION,overlay)
-        tmp.r = doOperation(fgValue.r, bgValue.r);
-        tmp.g = doOperation(fgValue.g, bgValue.g);
-        tmp.b = doOperation(fgValue.b, bgValue.b);
-        tmp.a = doOperation(fgValue.a, bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
         // Operations with alpha compositing (use whole color4 with alpha as scalar):
         // in, mask, out, over
-#elif STRING_CMP(OPERATION,in)
+#if STRING_CMP(OPERATION,in)
         // Reference: (fg * bg.a * mix) + (bg * (1-mix))
         tmp = fgValue * bgValue.a;
         outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
@@ -379,28 +356,7 @@ sample(const uniform Map*            uniform map,
         }
         outValue.a = fgValue.a;
 
-#elif STRING_CMP(OPERATION,inside)
-        // Reference: in * mask (component-wise multiply)
-        tmp.r = fgValue.r * bgValue.r;
-        tmp.g = fgValue.g * bgValue.g;
-        tmp.b = fgValue.b * bgValue.b;
-        tmp.a = fgValue.a * bgValue.a;
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,outside)
-        // Reference: in * (1 - mask) (component-wise)
-        tmp.r = fgValue.r * (1.0f - bgValue.r);
-        tmp.g = fgValue.g * (1.0f - bgValue.g);
-        tmp.b = fgValue.b * (1.0f - bgValue.b);
-        tmp.a = fgValue.a * (1.0f - bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,mix)
-        // Reference: mix(bg, fg, mix) - built-in lerp function
-        outValue = lerp(bgValue, fgValue, mixValue);
-
 #else
-        // Shouldn't reach here
         tmp.r = doOperation(fgValue.r, bgValue.r);
         tmp.g = doOperation(fgValue.g, bgValue.g);
         tmp.b = doOperation(fgValue.b, bgValue.b);
@@ -418,111 +374,14 @@ sample(const uniform Map*            uniform map,
 #elif STRING_CMP(VARIANT,color4_color4)
         // Same as color4 variant
         varying Col4f tmp;
-
-#if STRING_CMP(OPERATION,burn) || STRING_CMP(OPERATION,dodge) || STRING_CMP(OPERATION,screen) || \
-    STRING_CMP(OPERATION,difference) || STRING_CMP(OPERATION,plus) || STRING_CMP(OPERATION,minus) || \
-    STRING_CMP(OPERATION,overlay)
         tmp.r = doOperation(fgValue.r, bgValue.r);
         tmp.g = doOperation(fgValue.g, bgValue.g);
         tmp.b = doOperation(fgValue.b, bgValue.b);
         tmp.a = doOperation(fgValue.a, bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,in)
-        tmp = fgValue * bgValue.a;
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,mask)
-        tmp = bgValue * fgValue.a;
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,out)
-        tmp = fgValue * (1.0f - bgValue.a);
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,over)
-        tmp = fgValue + bgValue * (1.0f - fgValue.a);
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,matte)
-        tmp.r = fgValue.r * fgValue.a + bgValue.r * (1.0f - fgValue.a);
-        tmp.g = fgValue.g * fgValue.a + bgValue.g * (1.0f - fgValue.a);
-        tmp.b = fgValue.b * fgValue.a + bgValue.b * (1.0f - fgValue.a);
-        tmp.a = fgValue.a + bgValue.a * (1.0f - fgValue.a);
-        outValue = tmp * mixValue + bgValue * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,disjointover)
-        varying float summedAlpha = fgValue.a + bgValue.a;
-        if (summedAlpha <= 1.0f) {
-            tmp.r = fgValue.r + bgValue.r;
-            tmp.g = fgValue.g + bgValue.g;
-            tmp.b = fgValue.b + bgValue.b;
-        } else {
-            if (abs(bgValue.a) < sEpsilon) {
-                tmp.r = 0.0f;
-                tmp.g = 0.0f;
-                tmp.b = 0.0f;
-            } else {
-                varying float x = (1.0f - fgValue.a) / bgValue.a;
-                tmp.r = fgValue.r + bgValue.r * x;
-                tmp.g = fgValue.g + bgValue.g * x;
-                tmp.b = fgValue.b + bgValue.b * x;
-            }
-        }
-        tmp.a = min(summedAlpha, 1.0f);
-        outValue.r = tmp.r * mixValue + bgValue.r * (1.0f - mixValue);
-        outValue.g = tmp.g * mixValue + bgValue.g * (1.0f - mixValue);
-        outValue.b = tmp.b * mixValue + bgValue.b * (1.0f - mixValue);
-        outValue.a = tmp.a * mixValue + bgValue.a * (1.0f - mixValue);
-
-#elif STRING_CMP(OPERATION,premult)
-        outValue.r = fgValue.r * fgValue.a;
-        outValue.g = fgValue.g * fgValue.a;
-        outValue.b = fgValue.b * fgValue.a;
-        outValue.a = fgValue.a;
-
-#elif STRING_CMP(OPERATION,unpremult)
-        if (abs(fgValue.a) < sEpsilon) {
-            outValue.r = 0.0f;
-            outValue.g = 0.0f;
-            outValue.b = 0.0f;
-        } else {
-            outValue.r = fgValue.r / fgValue.a;
-            outValue.g = fgValue.g / fgValue.a;
-            outValue.b = fgValue.b / fgValue.a;
-        }
-        outValue.a = fgValue.a;
-
-#elif STRING_CMP(OPERATION,inside)
-        tmp.r = fgValue.r * bgValue.r;
-        tmp.g = fgValue.g * bgValue.g;
-        tmp.b = fgValue.b * bgValue.b;
-        tmp.a = fgValue.a * bgValue.a;
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,outside)
-        tmp.r = fgValue.r * (1.0f - bgValue.r);
-        tmp.g = fgValue.g * (1.0f - bgValue.g);
-        tmp.b = fgValue.b * (1.0f - bgValue.b);
-        tmp.a = fgValue.a * (1.0f - bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-
-#elif STRING_CMP(OPERATION,mix)
-        outValue = lerp(bgValue, fgValue, mixValue);
-
-#else
-        tmp.r = doOperation(fgValue.r, bgValue.r);
-        tmp.g = doOperation(fgValue.g, bgValue.g);
-        tmp.b = doOperation(fgValue.b, bgValue.b);
-        tmp.a = doOperation(fgValue.a, bgValue.a);
-        outValue = lerp(bgValue, tmp, mixValue);
-#endif
-#if !STRING_CMP(OPERATION,premult) && !STRING_CMP(OPERATION,unpremult)
-        outValue.r = max(0.0f, outValue.r);
-        outValue.g = max(0.0f, outValue.g);
-        outValue.b = max(0.0f, outValue.b);
-        outValue.a = max(0.0f, outValue.a);
-#endif
+        outValue.r = max(0.0f, lerp(bgValue.r, tmp.r, mixValue.r));
+        outValue.g = max(0.0f, lerp(bgValue.g, tmp.g, mixValue.g));
+        outValue.b = max(0.0f, lerp(bgValue.b, tmp.b, mixValue.b));
+        outValue.a = max(0.0f, lerp(bgValue.a, tmp.a, mixValue.a));
 
 #elif STRING_CMP(VARIANT,vector2)
         varying Vec2f tmp;
@@ -533,7 +392,8 @@ sample(const uniform Map*            uniform map,
         varying Vec2f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.r = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.g = lerp(bgValue.y, tmp.y, mixValue.y);
 #elif STRING_CMP(VARIANT,vector3)
         varying Vec3f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -545,7 +405,9 @@ sample(const uniform Map*            uniform map,
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.r = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.g = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.b = lerp(bgValue.z, tmp.z, mixValue.z);
 #elif STRING_CMP(VARIANT,vector4)
         varying Vec4f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -559,15 +421,23 @@ sample(const uniform Map*            uniform map,
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
         tmp.w = doOperation(fgValue.w, bgValue.w);
-        outValue = lerp(bgValue, tmp, mixValue);
+        outValue.r = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.g = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.b = lerp(bgValue.z, tmp.z, mixValue.z);
+        outValue.a = lerp(bgValue.w, tmp.w, mixValue.w);
+
 #endif
     }
 
     //
     // convert the return value if needed
     //
-#if STRING_CMP(FG_TYPE,Float)
+#if STRING_CMP(IN_TYPE,Float)
     return Color_ctor(outValue, outValue, outValue);
+#elif STRING_CMP(IN_TYPE,Vec2f)
+    return Color_ctor(outValue.x, outValue.y, 0.0);
+#elif STRING_CMP(IN_TYPE,Vec3f)
+    return Color_ctor(outValue.x, outValue.y, outValue.z);
 #else
     return outValue;
 #endif

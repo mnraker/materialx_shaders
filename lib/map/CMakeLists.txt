@@ -18,6 +18,7 @@ add_library(${objLib} OBJECT)
 
 target_sources(${objLib}
     PRIVATE
+        ispc/MtlxHextile.ispc
         ispc/MtlxVariantTypes.ispc
 )
 
@@ -63,6 +64,7 @@ endif()
 get_target_property(ISPC_TARGET_OBJECTS ${objLib} TARGET_OBJECTS)
 target_sources(${component}
     PRIVATE
+        MtlxHextile.cc
         MtlxVariantTypes.cc
         # pull in our ispc object files
         ${ISPC_TARGET_OBJECTS}
@@ -70,12 +72,15 @@ target_sources(${component}
 
 set_property(TARGET ${component}
     PROPERTY PUBLIC_HEADER
+        MtlxHextile.h
         MtlxVariantTypes.h
+        # ${CMAKE_CURRENT_BINARY_DIR}/MtlxHextile_ispc_stubs.h
         ${CMAKE_CURRENT_BINARY_DIR}/MtlxVariantTypes_ispc_stubs.h
 )
 
 set_property(TARGET ${component}
     PROPERTY PRIVATE_HEADER
+        ispc/MtlxHextile.isph
         ispc/MtlxVariantTypes.isph
 )
 
