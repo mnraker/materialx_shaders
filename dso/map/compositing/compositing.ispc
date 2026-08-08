@@ -392,8 +392,8 @@ sample(const uniform Map*            uniform map,
         varying Vec2f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
-        outValue.r = lerp(bgValue.x, tmp.x, mixValue.x);
-        outValue.g = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue.y);
 #elif STRING_CMP(VARIANT,vector3)
         varying Vec3f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -405,9 +405,9 @@ sample(const uniform Map*            uniform map,
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
-        outValue.r = lerp(bgValue.x, tmp.x, mixValue.x);
-        outValue.g = lerp(bgValue.y, tmp.y, mixValue.y);
-        outValue.b = lerp(bgValue.z, tmp.z, mixValue.z);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.z = lerp(bgValue.z, tmp.z, mixValue.z);
 #elif STRING_CMP(VARIANT,vector4)
         varying Vec4f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -421,10 +421,10 @@ sample(const uniform Map*            uniform map,
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
         tmp.w = doOperation(fgValue.w, bgValue.w);
-        outValue.r = lerp(bgValue.x, tmp.x, mixValue.x);
-        outValue.g = lerp(bgValue.y, tmp.y, mixValue.y);
-        outValue.b = lerp(bgValue.z, tmp.z, mixValue.z);
-        outValue.a = lerp(bgValue.w, tmp.w, mixValue.w);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.z = lerp(bgValue.z, tmp.z, mixValue.z);
+        outValue.w = lerp(bgValue.w, tmp.w, mixValue.w);
 
 #endif
     }

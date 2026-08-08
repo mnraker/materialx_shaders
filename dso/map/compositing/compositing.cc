@@ -133,7 +133,7 @@ using namespace scene_rdl2::rdl2;
 
 #define IN_TYPE Vec4f
 #define IN_DEFAULT Vec4f(IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT,IN_DEFAULT_FLOAT)
-#define MIX_TYPE Rgba
+#define MIX_TYPE Vec4f
 #define MIX_DEFAULT Vec4f(MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT,MIX_DEFAULT_FLOAT)
 #define OUT_TYPE TYPE_VEC4F
 
@@ -474,8 +474,8 @@ SHADER_NAME::sample(const Map* self,
         Vec2f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
-        outValue.x = lerp(bgValue.x, tmp.x, mixValue);
-        outValue.y = lerp(bgValue.y, tmp.y, mixValue);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue.y);
 #elif STRING_CMP(VARIANT,vector3)
         Vec3f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -487,9 +487,9 @@ SHADER_NAME::sample(const Map* self,
         tmp.x = doOperation(fgValue.x, bgValue.x);
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
-        outValue.x = lerp(bgValue.x, tmp.x, mixValue);
-        outValue.y = lerp(bgValue.y, tmp.y, mixValue);
-        outValue.z = lerp(bgValue.z, tmp.z, mixValue);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.z = lerp(bgValue.z, tmp.z, mixValue.z);
 #elif STRING_CMP(VARIANT,vector4)
         Vec4f tmp;
         tmp.x = doOperation(fgValue.x, bgValue.x);
@@ -503,10 +503,10 @@ SHADER_NAME::sample(const Map* self,
         tmp.y = doOperation(fgValue.y, bgValue.y);
         tmp.z = doOperation(fgValue.z, bgValue.z);
         tmp.w = doOperation(fgValue.w, bgValue.w);
-        outValue.x = lerp(bgValue.x, tmp.x, mixValue);
-        outValue.y = lerp(bgValue.y, tmp.y, mixValue);
-        outValue.z = lerp(bgValue.z, tmp.z, mixValue);
-        outValue.w = lerp(bgValue.w, tmp.w, mixValue);
+        outValue.x = lerp(bgValue.x, tmp.x, mixValue.x);
+        outValue.y = lerp(bgValue.y, tmp.y, mixValue.y);
+        outValue.z = lerp(bgValue.z, tmp.z, mixValue.z);
+        outValue.w = lerp(bgValue.w, tmp.w, mixValue.w);
 #endif
     }
 

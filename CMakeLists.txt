@@ -10,7 +10,7 @@ find_program(GENERATE_PYTHON_CREATE_FUNCTIONS generate_python_create_functions
 include(OMR_PackageVersion)  # Sets versionString, projectString and PACKAGE_NAME
 project(${projectString}
     VERSION ${versionString}
-    LANGUAGES CXX ISPC)
+    LANGUAGES CXX)
 
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 list(APPEND CMAKE_MESSAGE_CONTEXT ${PROJECT_NAME})
@@ -24,8 +24,10 @@ endif()
 
 include(CheckLanguage)
 check_language(ISPC)
-if(CMAKE_ISPC_COMPILER)
+if(CMAKE_ISPC_COMPILER AND NOT WIN32)
     enable_language(ISPC)
+elseif(CMAKE_ISPC_COMPILER)
+    message(STATUS "Using custom ISPC compile commands on Windows")
 else()
     message(STATUS "No ISPC support")
 endif()

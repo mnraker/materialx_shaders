@@ -27,8 +27,10 @@ set_target_properties(
     ${objLib}
     PROPERTIES
         ISPC_HEADER_SUFFIX _ispc_stubs.h
-        ISPC_HEADER_DIRECTORY /${relBinDir}
+        ISPC_HEADER_DIRECTORY ${relBinDir}
         ISPC_INSTRUCTION_SETS avx2-i32x8
+    ISPC_ARCH ${GLOBAL_ISPC_ARCH}
+    ISPC_TARGET_OS ${GLOBAL_ISPC_TARGET_OS}
         # ISPC_INSTRUCTION_SETS ${GLOBAL_ISPC_INSTRUCTION_SETS}
         LINKER_LANGUAGE CXX
 )
@@ -42,6 +44,7 @@ target_link_libraries(${objLib}
         Moonray::shading_ispc
         Moonray::texturing_sampler
         SceneRdl2::scene_rdl2
+        Moonray::rendering_shading
 )
 
 # Set standard compile/link options
@@ -56,6 +59,7 @@ if(NOT objLibDeps STREQUAL "")
         Moonray::shading_ispc
         Moonray::texturing_sampler
         SceneRdl2::scene_rdl2
+        Moonray::rendering_shading
     )
 endif()
 
@@ -101,6 +105,7 @@ target_link_libraries(${component}
         Moonray::shading_ispc
         Moonray::texturing_sampler
         SceneRdl2::scene_rdl2
+        Moonray::rendering_shading
 )
 
 add_dependencies(${component} ${objLib})
@@ -140,3 +145,4 @@ install(TARGETS ${component}
 #     NAMESPACE ${PROJECT_NAME}::
 #     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}-${PROJECT_VERSION}
 # )
+

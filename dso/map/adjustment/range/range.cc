@@ -239,12 +239,12 @@ SHADER_NAME::sample(const Map* self, moonray::shading::TLState *tls,
 {
     const SHADER_NAME* me = static_cast<const SHADER_NAME*>(self);
 
-    const IN_TYPE inValue = IN_EVAL(me, inAttr, tls, state);
-    const RANGE_TYPE inLow = RANGE_EVAL(me, inLowAttr, tls, state);
-    const RANGE_TYPE inHigh = RANGE_EVAL(me, inHighAttr, tls, state);
-    const RANGE_TYPE outLow = RANGE_EVAL(me, outLowAttr, tls, state);
-    const RANGE_TYPE outHigh = RANGE_EVAL(me, outHighAttr, tls, state);
-    const RANGE_TYPE gamma = RANGE_EVAL(me, gammaAttr, tls, state);
+    const IN_TYPE inValue = IN_EVAL(me, ATTR_NAMESPACE::inAttr, tls, state);
+    const RANGE_TYPE inLow = RANGE_EVAL(me, ATTR_NAMESPACE::inLowAttr, tls, state);
+    const RANGE_TYPE inHigh = RANGE_EVAL(me, ATTR_NAMESPACE::inHighAttr, tls, state);
+    const RANGE_TYPE outLow = RANGE_EVAL(me, ATTR_NAMESPACE::outLowAttr, tls, state);
+    const RANGE_TYPE outHigh = RANGE_EVAL(me, ATTR_NAMESPACE::outHighAttr, tls, state);
+    const RANGE_TYPE gamma = RANGE_EVAL(me, ATTR_NAMESPACE::gammaAttr, tls, state);
 
     IN_TYPE outValue;
     if (me->mIspc.disableMode) {

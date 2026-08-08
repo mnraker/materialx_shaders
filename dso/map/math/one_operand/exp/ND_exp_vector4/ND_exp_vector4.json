@@ -15,7 +15,7 @@
 			"type" : "Vec4f"
 		}
 	},
-	"name" : "ND_cos_vector4",
+	"name" : "ND_exp_vector4",
 	"type" : "Map",
         "outputAttributes" :
         {

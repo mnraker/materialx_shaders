@@ -124,6 +124,12 @@
 #define UNIQUE_ID_vector2I        67
 #define UNIQUE_ID_vector3I        68
 #define UNIQUE_ID_vector4I        69
+#define UNIQUE_ID_color3_color3   70
+#define UNIQUE_ID_color4_color4   71
+#define UNIQUE_ID_vector2_vector2 72
+#define UNIQUE_ID_vector3_vector3 73
+#define UNIQUE_ID_vector4_vector4 74
+#define UNIQUE_ID_boolean 75
 
 // TYPES -- inputs usable by materialx maps
 #define UNIQUE_ID_Bool  101

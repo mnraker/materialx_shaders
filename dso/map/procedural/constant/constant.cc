@@ -61,9 +61,9 @@ using namespace scene_rdl2::rdl2;
 #define OUT_TYPE TYPE_MAT4F
 
 #elif STRING_CMP(VARIANT,boolean)
-#define VALUE_TYPE Int
-#define VALUE_DEFAULT 0
-#define OUT_TYPE TYPE_INT
+#define VALUE_TYPE Bool
+#define VALUE_DEFAULT false
+#define OUT_TYPE TYPE_BOOL
 
 #elif STRING_CMP(VARIANT,integer)
 #define VALUE_TYPE Int
@@ -77,7 +77,7 @@ using namespace scene_rdl2::rdl2;
 #endif
 
 #if STRING_CMP(VALUE_TYPE,Bool)
-#define VALUE_EVAL evalInt
+#define VALUE_EVAL evalBool
 #else
 #define VALUE_EVAL CONCAT2(eval,VALUE_TYPE)
 #endif

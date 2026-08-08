@@ -76,11 +76,13 @@ function(${PROJECT_NAME}_ispc_compile_options target)
     set_property(TARGET ${target}
                  PROPERTY DEPENDENCY "")
     check_language(ISPC)
-    if(NOT CMAKE_ISPC_COMPILER)
+    if(NOT CMAKE_ISPC_COMPILER OR IsWindowsPlatform)
         get_target_property(SOURCES ${target} SOURCES)
         get_target_property(ISPC_HEADER_SUFFIX ${target} ISPC_HEADER_SUFFIX)
         get_target_property(ISPC_HEADER_DIRECTORY ${target} ISPC_HEADER_DIRECTORY)
         get_target_property(ISPC_INSTRUCTION_SETS ${target} ISPC_INSTRUCTION_SETS)
+        get_target_property(ISPC_ARCH ${target} ISPC_ARCH)
+        get_target_property(ISPC_TARGET_OS ${target} ISPC_TARGET_OS)
 
         set(configDepFlags "")
         if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -110,29 +112,53 @@ function(${PROJECT_NAME}_ispc_compile_options target)
 
             get_filename_component(srcName ${src} NAME_WE)
             
-            set(objOut "${CMAKE_CURRENT_BINARY_DIR}/${srcName}.o")
-            set(depFile "${CMAKE_CURRENT_BINARY_DIR}/${srcName}.dep")
-            add_custom_command(
-                OUTPUT ${objOut}
-                COMMAND ${ISPC_COMPILER} ${CMAKE_CURRENT_SOURCE_DIR}/${src}
-                    -o ${objOut}
-                    -h "./${ISPC_HEADER_DIRECTORY}/${srcName}${ISPC_HEADER_SUFFIX}"
-                    -M -MF ${depFile}
-                    --arch=aarch64                      # TODO: hardcoded...
-                    --target=${ISPC_INSTRUCTION_SETS}
-                    --target-os=macos
-                    ${commonOptions}
-                    ${configDepFlags}
-                    "-I$<JOIN:$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>,;-I>"
-                WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-                COMMAND_EXPAND_LISTS
-                VERBATIM
-                DEPFILE ${depFile}
-                DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${src})
-            list(APPEND ISPC_TARGET_OBJECTS ${objOut})
+        set(objOut "${CMAKE_CURRENT_BINARY_DIR}/${srcName}.o")
+        set(depFile "${CMAKE_CURRENT_BINARY_DIR}/${srcName}.dep")
+
+        if(IsWindowsPlatform)
+            set(depArgs "")
+            set(depFileArg "")
+            set(ispcArch ${ISPC_ARCH})
+            set(ispcTargetOs ${ISPC_TARGET_OS})
+        else()
+            set(depArgs -M -MF ${depFile})
+            set(depFileArg DEPFILE ${depFile})
+            set(ispcArch aarch64)
+            set(ispcTargetOs macos)
+        endif()
+
+        set(headerOut "${ISPC_HEADER_DIRECTORY}/${srcName}${ISPC_HEADER_SUFFIX}")
+        if(IS_ABSOLUTE "${headerOut}")
+            set(headerArg "${headerOut}")
+        else()
+            set(headerArg "./${headerOut}")
+        endif()
+
+        add_custom_command(
+            OUTPUT ${objOut}
+            COMMAND ${ISPC_COMPILER} ${CMAKE_CURRENT_SOURCE_DIR}/${src}
+                -o ${objOut}
+                -h ${headerArg}
+                ${depArgs}
+                --arch=${ispcArch}
+                --target=${ISPC_INSTRUCTION_SETS}
+                --target-os=${ispcTargetOs}
+                ${commonOptions}
+                ${configDepFlags}
+                "-I$<JOIN:$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>,;-I>"
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            COMMAND_EXPAND_LISTS
+            VERBATIM
+            ${depFileArg}
+            DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${src})
+        list(APPEND ISPC_TARGET_OBJECTS ${objOut})
         endforeach()
         target_link_libraries(${target}
                 PRIVATE ${ISPC_TARGET_OBJECTS})
+    if(IsWindowsPlatform)
+        target_sources(${target}
+            PRIVATE ${ISPC_TARGET_OBJECTS})
+    endif()
         add_custom_target(${target}_ispc_dep DEPENDS ${ISPC_TARGET_OBJECTS})
         add_dependencies(${target} ${target}_ispc_dep)
         set_property(TARGET ${target}
