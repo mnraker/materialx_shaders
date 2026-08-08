@@ -42,7 +42,11 @@ if(WIN32)
             ${GENERATE_PYTHON_CREATE_FUNCTIONS}
             -o ${CMAKE_CURRENT_BINARY_DIR}/shaders.py
         COMMENT "Generating shaders.py"
-        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../generate_python_create_functions/generate_python_create_functions"
+        DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/../generate_python_create_functions/generate_python_create_functions"
+        scene_rdl2
+        __scene_rdl2__
+        scene_rdl2_module
         VERBATIM
     )
 else()
@@ -55,7 +59,11 @@ else()
             ${GENERATE_PYTHON_CREATE_FUNCTIONS}
             -o ${CMAKE_CURRENT_BINARY_DIR}/shaders.py
         COMMENT "Generating shaders.py"
-        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../generate_python_create_functions/generate_python_create_functions"
+        DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/../generate_python_create_functions/generate_python_create_functions"
+        scene_rdl2
+        __scene_rdl2__
+        scene_rdl2_module
         VERBATIM
     )
 endif()
