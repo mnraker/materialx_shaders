@@ -8,9 +8,13 @@ find_program(GENERATE_PYTHON_CREATE_FUNCTIONS generate_python_create_functions
 		     REQUIRED)
 
 include(OMR_PackageVersion)  # Sets versionString, projectString and PACKAGE_NAME
+set(languages LANGUAGES CXX C)
+if(NOT CMAKE_XCODE_BUILD_SYSTEM AND ("${CMAKE_GENERATOR}" MATCHES "Make"))
+    list(APPEND languages ISPC)
+endif()
 project(${projectString}
     VERSION ${versionString}
-    LANGUAGES CXX)
+    ${languages})
 
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 list(APPEND CMAKE_MESSAGE_CONTEXT ${PROJECT_NAME})
