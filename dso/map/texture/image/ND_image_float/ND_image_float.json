@@ -16,6 +16,7 @@
         },
         "fileAttr" :
         {
+            "flags" : "FLAGS_FILENAME",
             "label" : "Filename",
             "name" : "file",
             "type" : "String"

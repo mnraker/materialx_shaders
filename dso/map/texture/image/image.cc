@@ -98,7 +98,7 @@ MTLX_ATTR_DECLARE_END
 MTLX_ATTR_DEFINE_BEGIN
     disableAttr = sceneClass.declareAttribute<Bool>("disable", 0, FLAGS_NONE, INTERFACE_GENERIC, {});
     defaultAttr = sceneClass.declareAttribute<IN_TYPE>("default", IN_DEFAULT, FLAGS_BINDABLE, INTERFACE_GENERIC, {});
-    fileAttr = sceneClass.declareAttribute<String>("file", FLAGS_NONE, INTERFACE_GENERIC, {});
+    fileAttr = sceneClass.declareAttribute<String>("file", FLAGS_FILENAME, INTERFACE_GENERIC, {});
     filtertypeAttr = sceneClass.declareAttribute<Int>("filtertype", 0, FLAGS_ENUMERABLE, INTERFACE_GENERIC, {});
         sceneClass.setEnumValue(filtertypeAttr, 0, "closest");
         sceneClass.setEnumValue(filtertypeAttr, 2, "cubic");
