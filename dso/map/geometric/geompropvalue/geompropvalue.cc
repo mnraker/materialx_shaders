@@ -131,6 +131,9 @@ private:
     void createUnsupportedStringLogEvent(const std::string& primAttrName);
 
     ispc::SHADER_NAME mIspc;
+#if STRING_CMP(VARIANT,vector2)
+    bool mUseBuiltInSt = false;
+#endif
     std::unique_ptr<moonray::shading::Xform> mXform;
 
 RDL2_DSO_CLASS_END(SHADER_NAME)
@@ -180,6 +183,11 @@ SHADER_NAME::update()
 
     if (hasChanged(geompropAttr)) {
         const std::string attrName = get(geompropAttr);
+
+#if STRING_CMP(VARIANT,vector2)
+        mUseBuiltInSt = (attrName == "st");
+        mIspc.mUseBuiltInSt = mUseBuiltInSt;
+#endif
 #if STRING_CMP(VARIANT,float)
         moonray::shading::TypedAttributeKey<float> attributeKey(attrName);
         createMissingAttrLogEvent("float", attrName);
@@ -209,7 +217,13 @@ SHADER_NAME::update()
         createUnsupportedStringLogEvent(attrName);
 #endif
         mIspc.mPrimitiveAttributeIndex = attributeKey;
+#if STRING_CMP(VARIANT,vector2)
+        if (!mUseBuiltInSt) {
+            mOptionalAttributes.push_back(attributeKey);
+        }
+#else
         mOptionalAttributes.push_back(attributeKey);
+#endif
     }
 }
 
@@ -225,6 +239,11 @@ SHADER_NAME::sample(const Map * self, moonray::shading::TLState *tls,
     if (me->mIspc.mDisableMode) {
         outValue = DEFAULT_EVAL(me, defaultAttr, tls, state);
     } else {
+#if STRING_CMP(VARIANT,vector2)
+        if (me->mUseBuiltInSt) {
+            outValue = state.getSt();
+        } else
+#endif
         if (state.isProvided(key)) {
 #if STRING_CMP(VARIANT,float)
             outValue = state.getAttribute(moonray::shading::TypedAttributeKey<float>(key));

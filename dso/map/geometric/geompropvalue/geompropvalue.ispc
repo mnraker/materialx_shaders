@@ -74,6 +74,9 @@
 // unchanged
 struct SHADER_NAME {
     uniform bool mDisableMode;
+#if STRING_CMP(VARIANT,vector2)
+    uniform bool mUseBuiltInSt;
+#endif
     uniform int mPrimitiveAttributeIndex;
     uniform int mMissingAttributeEvent;
     uniform int mUnsupportedStringEvent;
@@ -97,6 +100,11 @@ sample(const uniform Map*            uniform map,
     if (me->mDisableMode) {
         outValue = DEFAULT_EVAL(map, tls, state, defaultAttr);
     } else {
+#if STRING_CMP(VARIANT,vector2)
+        if (me->mUseBuiltInSt) {
+            outValue = getSt(state);
+        } else
+#endif
         if (isProvided(state, key)) {
 #if STRING_CMP(VARIANT,float)
             outValue = getFloatAttribute(tls, state, key);

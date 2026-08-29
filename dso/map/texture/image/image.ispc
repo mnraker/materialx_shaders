@@ -106,7 +106,7 @@ sample(const uniform Map*            uniform map,
         return OUT_DEFAULT;
     }
 
-    if (!me->mTexture) {
+    if (!me->mTexture && !me->mUdimTexture) {
 #if STRING_CMP(IN_TYPE,Float) || STRING_CMP(IN_TYPE,Vec2f) || STRING_CMP(IN_TYPE,Vec3f) || STRING_CMP(IN_TYPE,Color)
         return me->mFatalColor;
 #else
